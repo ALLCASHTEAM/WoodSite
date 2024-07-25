@@ -19,10 +19,12 @@
 
 <style scoped>
 .header {
+  font-family: Inter;
+  font-size: large;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #f5f5dc;
+  background-color: #fae6da;
 }
 .logo {
   display: flex;
