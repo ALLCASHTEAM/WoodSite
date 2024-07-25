@@ -45,6 +45,7 @@ export default {
   background-color: #5c4d46;
   color: #ffffff;
   padding: 5px 500px;
+  font-family: Inter;
 }
 
 .footer-content {

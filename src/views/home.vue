@@ -43,6 +43,7 @@ export default {
   color: #333;
   text-align: center;
   padding: 20px;
+  font-family: Inter;
 }
 .content {
   max-width: 800px;
