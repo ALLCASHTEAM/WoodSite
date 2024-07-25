@@ -42,23 +42,26 @@ export default {
   background-color: #c6ab9c;
   color: #333;
   text-align: center;
-  padding: 20px;
   font-family: Inter;
 }
+
 .content {
   max-width: 800px;
   margin: 0 auto;
 }
+
 .photos {
   display: flex;
   justify-content: space-around;
   margin: 20px 0;
 }
+
 .photos img {
   width: 200px;
   height: auto;
   border-radius: 10px;
 }
+
 .catalog-button {
   background-color: #8b4513;
   color: white;
@@ -67,6 +70,7 @@ export default {
   border-radius: 5px;
   cursor: pointer;
 }
+
 .catalog-button:hover {
   background-color: #a0522d;
 }
