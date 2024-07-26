@@ -35,7 +35,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #fae6da;
+  background-color: #faeedd;
+  border-bottom: 1px solid;
 }
 .logo {
   display: flex;

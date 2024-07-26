@@ -39,7 +39,7 @@ export default {
 
 <style scoped>
 .home-view {
-  background-color: #c6ab9c;
+  background-color: #faeedd;
   color: #333;
   text-align: center;
   font-family: Inter;
