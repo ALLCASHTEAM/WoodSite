@@ -35,7 +35,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #faeedd;
+  background-color: #fff8e7;
   border-bottom: 1px solid;
 }
 .logo {
