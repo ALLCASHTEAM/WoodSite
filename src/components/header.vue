@@ -2,13 +2,14 @@
   <header class="header">
     <div class="logo">
       <img src="@/assets/logo.jpg" alt="Логотип компании" />
-      <h1>Мастерская мебели и лестниц</h1>
+      <h1>WOODSHOP</h1>
     </div>
     <div class="flex-container" style="gap: 20px; padding-right: 1%">
       <router-link to="/" class="no-color-link">Главная</router-link>
       <router-link to="/about" class="no-color-link">О нас</router-link>
       <router-link to="/catalog" class="no-color-link">Каталог</router-link>
       <router-link to="/contact" class="no-color-link">Контакты</router-link>
+      <router-link to="/faq" class="no-color-link">FAQ</router-link>
       <span class="icon">👤</span>
       <span class="icon">🛒</span>
     </div>
@@ -26,6 +27,7 @@
 .no-color-link {
   color: inherit;
   text-decoration: none;
+  font-size: 22px;
 }
 .header {
   font-family: Inter;
