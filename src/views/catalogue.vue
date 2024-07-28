@@ -1,12 +1,27 @@
 <template>
-  <div>
-    <!-- Ваш HTML-шаблон -->
+  <div class="catalogue-view">
+    <Header />
+    <main class="content">
+      <h1>CATALOG</h1>
+    </main>
+    <Footer />
   </div>
 </template>
 
 <script>
+import Header from '@/components/header.vue';
+import Footer from '@/components/footer.vue';
+
 export default {
-  // Логика и данные компонента
+  components: {
+    Header,
+    Footer,
+  },
+  methods: {
+    goToCatalog() {
+      this.$router.push('/catalog');
+    },
+  },
 };
 </script>
 
