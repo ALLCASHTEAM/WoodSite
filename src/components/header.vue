@@ -5,23 +5,13 @@
       <h1>WOODSHOP</h1>
     </div>
     <nav class="flex-container">
-      <router-link to="/" class="nav-link btn-2" exact-active-class="active">
-        Главная
-      </router-link>
-      <router-link to="/about" class="nav-link btn-2" active-class="active">
-        О нас
-      </router-link>
-      <router-link to="/catalog" class="nav-link btn-2" active-class="active">
-        Каталог
-      </router-link>
-      <router-link to="/contacts" class="nav-link btn-2" active-class="active">
-        Контакты
-      </router-link>
-      <router-link to="/faq" class="nav-link btn-2" active-class="active">
-        FAQ
-      </router-link>
-      <span class="icon btn-2">👤</span>
-      <span class="icon btn-2">🛒</span>
+      <router-link to="/" class="nav-link btn-2" exact-active-class="active">Главная</router-link>
+      <router-link to="/about" class="nav-link btn-2" active-class="active">О нас</router-link>
+      <router-link to="/catalog" class="nav-link btn-2" active-class="active">Каталог</router-link>
+      <router-link to="/contacts" class="nav-link btn-2" active-class="active">Контакты</router-link>
+      <router-link to="/faq" class="nav-link btn-2" active-class="active">FAQ</router-link>
+      <span class="icon">👤</span>
+      <span class="icon">🛒</span>
     </nav>
   </header>
 </template>
@@ -34,7 +24,7 @@
   justify-content: space-between;
   align-items: center;
   background-color: #fff8e7;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 3px solid #ccc;
   padding: 0 20px;
 }
 
