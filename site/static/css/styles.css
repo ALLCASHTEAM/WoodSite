@@ -1,14 +1,132 @@
-@font-face {
-    font-family: 'Inter';
-    src: url('@/assets/Fonts/InterVariable.woff2') format('woff2');
-    font-family: ''
-
-  }
-
+/* Общие стили */
 body {
   margin: 0 auto;
 }
 
+/* Стили для хедера */
+.header {
+  font-family: Inter;
+  font-size: large;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff8e7;
+  border-bottom: 1px solid;
+  padding: 0 20px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.flex-container {
+  display: flex;
+  gap: 20px;
+  padding-right: 1%;
+}
+
+.nav-link {
+  color: inherit;
+  text-decoration: none;
+  font-size: 22px;
+  padding: 10px 20px;
+  position: relative;
+}
+.nav-link-kat {
+  color: inherit;
+  text-decoration: none;
+  font-size: 22px;
+  position: relative;
+}
+.icon {
+  font-size: 24px;
+  padding: 10px;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Стили для анимации */
+.nav-link:before,
+.nav-link:after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  background: #000;
+  transition: width 0.25s ease-in-out;
+}
+
+.nav-link:before {
+  top: 0;
+  left: 0;
+}
+
+.nav-link:after {
+  bottom: 0;
+  right: 0;
+}
+
+.nav-link:hover:before,
+.nav-link:hover:after {
+  width: 100%;
+}
+
+.active {
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+}
+
+.active:before,
+.active:after {
+  width: 100% !important;
+  background: #fff;
+}
+
+.active:hover:before,
+.active:hover:after {
+  width: 100% !important;
+}
+
+/* Стили для выпадающего меню */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #5c4d46;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  padding: 10px;
+}
+
+.dropdown-content a {
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Стили для футера */
 .footer {
   background-color: #5c4d46;
   color: #ffffff;
@@ -22,17 +140,11 @@ body {
   justify-content: center; /* Выравнивание по центру горизонтально */
 }
 
-.footer-catalog-1 {
-  line-height: 1.5;
-  text-align: left;
-  margin-right: 30px;
-  text-decoration: underline;
-}
-
+.footer-catalog-1,
 .footer-catalog-2 {
   line-height: 1.5;
   text-align: left;
-  margin-left: 10px;
+  margin-right: 30px;
   text-decoration: underline;
 }
 
@@ -78,176 +190,3 @@ body {
   font-size: 16px;
   line-height: 1;
 }
-.naming {
-  font-family: 'Permanent Marker', cursive;
-  font-style: normal;
-}
-
-.flex-container {
-  display: flex;
-}
-.flex-container > router-link > a {
-  margin: 10px;
-  padding: 20px;
-}
-.no-color-link {
-  color: inherit;
-  text-decoration: none;
-  font-size: 22px;
-}
-.header {
-  font-family: Inter;
-  font-size: large;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #fff8e7;
-  border-bottom: 1px solid;
-}
-.logo {
-  display: flex;
-  align-items: center;
-}
-.logo img {
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
-  margin-left: 10px;
-}
-nav {
-  flex-grow: 1;
-  display: flex;
-  justify-content: space-around;
-}
-
-
-.header {
-    font-family: Inter;
-    font-size: large;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #fff8e7;
-    border-bottom: 1px solid;
-    position: relative;
-}
-
-.flex-container {
-    display: flex;
-    gap: 20px;
-    padding-right: 1%;
-}
-
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #5c4d46;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    padding: 10px;
-}
-
-.dropdown-content a {
-    color: white;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown-content a:hover {
-    background-color: #ddd;
-    color: black;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.no-color-link {
-    color: inherit;
-    text-decoration: none;
-    font-size: 22px;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-}
-
-.logo img {
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
-    margin-left: 10px;
-}
-
-.header {
-    font-family: Inter;
-    font-size: large;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #fff8e7;
-    border-bottom: 1px solid;
-    position: relative;
-}
-
-.flex-container {
-    display: flex;
-    gap: 20px;
-    padding-right: 1%;
-}
-
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #5c4d46;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    padding: 10px;
-}
-
-.dropdown-content a {
-    color: white;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown-content a:hover {
-    background-color: #ddd;
-    color: black;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.dropdown-link:hover, .dropdown:hover .dropdown-link {
-    background-color: #5c4d46;
-    color: white;
-}
-
-.no-color-link {
-    color: inherit;
-    text-decoration: none;
-    font-size: 22px;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-}
-

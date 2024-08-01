@@ -13,10 +13,10 @@
             <h1>WOODSHOP</h1>
         </div>
         <div class="flex-container" style="gap: 20px; padding-right: 1%">
-            <a href="{{ url_for('index') }}" class="no-color-link dropdown-link">Главная</a>
-            <a href="{{ url_for('about') }}" class="no-color-link dropdown-link">О нас</a>
-            <div class="dropdown">
-                <a href="{{ url_for('catalog') }}" class="no-color-link dropdown-link">Каталог</a>
+            <a id="home-link" href="{{ url_for('index') }}" class="nav-link">Главная</a>
+            <a id="about-link" href="{{ url_for('about') }}" class="nav-link">О нас</a>
+            <div id="catalog-link" class="dropdown nav-link">
+                <a href="{{ url_for('catalog') }}" class="nav-link-kat">Каталог</a>
                 <div class="dropdown-content">
                     <a href="#">Столешницы</a>
                     <a href="#">Стулья</a>
@@ -28,14 +28,12 @@
                     <a href="#">Декор</a>
                 </div>
             </div>
-            <a href="{{ url_for('contact') }}" class="no-color-link dropdown-link">Контакты</a>
-            <a href="{{ url_for('faq') }}" class="no-color-link dropdown-link">FAQ</a>
-            <span class="icon dropdown-link">👤</span>
-            <span class="icon dropdown-link">🛒</span>
+            <a id="contact-link" href="{{ url_for('contact') }}" class="nav-link">Контакты</a>
+            <a id="faq-link" href="{{ url_for('faq') }}" class="nav-link">FAQ</a>
+            <span class="icon">👤</span>
+            <span class="icon">🛒</span>
         </div>
     </header>
-
-
 
     <main>
         {% block content %}{% endblock %}
@@ -79,3 +77,19 @@
     </footer>
 </body>
 </html>
+<script>
+        // Получаем текущий URL
+    const currentLocation = window.location.pathname;
+        // Устанавливаем класс active на соответствующий элемент <a>
+    if (currentLocation === '/') {
+        document.getElementById('home-link').classList.add('active');
+    } else if (currentLocation.includes('/about')) {
+        document.getElementById('about-link').classList.add('active');
+    } else if (currentLocation.includes('/catalog')) {
+        document.getElementById('catalog-link').classList.add('active');
+    } else if (currentLocation.includes('/contact')) {
+        document.getElementById('contact-link').classList.add('active');
+    } else if (currentLocation.includes('/faq')) {
+        document.getElementById('faq-link').classList.add('active');
+    }
+</script>
