@@ -182,7 +182,6 @@ def catalog():
     return render_template('catalog.html', products=product_data)
 
 
-
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
