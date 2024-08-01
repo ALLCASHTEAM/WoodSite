@@ -4,6 +4,11 @@
     font-family: ''
 
   }
+
+body {
+  margin: 0 auto;
+}
+
 .footer {
   background-color: #5c4d46;
   color: #ffffff;
@@ -246,9 +251,3 @@ nav {
     align-items: center;
 }
 
-.logo img {
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
-    margin-left: 10px;
-}

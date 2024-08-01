@@ -5,67 +5,83 @@
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/faq.css') }}">
 
-<div class="faq-container">
-    <h2>Часто задаваемые вопросы</h2>
-    <div class="faq-item">
-        <input type="checkbox" id="question1">
-        <label for="question1">Я боюсь, что эспандер порвется и ударит меня.</label>
-        <div class="answer">
-            <p>Ответ на вопрос.Ответ на вопрос.Ответ на вопрос.Ответ на вопрос.Ответ на вопрос.Ответ на вопрос.Ответ на вопрос.Ответ на вопрос.Ответ на вопрос.Ответ на вопрос.Ответ на вопрос.Ответ на вопрос.Ответ на вопрос.Ответ на вопрос.Ответ на вопрос.Ответ на вопрос.Ответ на вопрос.Ответ на вопрос.Ответ на вопрос.Ответ на вопрос.Ответ на вопрос.Ответ на вопрос.Ответ на вопрос.Ответ на вопрос.Ответ на вопрос.Ответ на вопрос.Ответ на вопрос.</p>
+<div class="faq-view">
+    <header>
+        <h1>Часто задаваемые вопросы</h1>
+    </header>
+    <main class="faq-container">
+        <div class="faq-item" onclick="toggleAnswer(1)">
+            <div class="faq-question">
+                <p>Я боюсь, что эспандер порвется и ударит меня.</p>
+                <span id="arrow-1" class="arrow-right">&#9656;</span>
+            </div>
+            <div id="answer-1" class="faq-answer">
+                <p>Ответ на вопрос. Ответ на вопрос...</p>
+            </div>
         </div>
-    </div>
-    <div class="faq-item">
-        <input type="checkbox" id="question2">
-        <label for="question2">Можно ли заниматься с эспандерами мужчинам?</label>
-        <div class="answer">
-            <p>Ответ на вопрос.</p>
+        <div class="faq-item" onclick="toggleAnswer(2)">
+            <div class="faq-question">
+                <p>Можно ли заниматься с эспандерами мужчинам?</p>
+                <span id="arrow-2" class="arrow-right">&#9656;</span>
+            </div>
+            <div id="answer-2" class="faq-answer">
+                <p>Ответ на вопрос.</p>
+            </div>
         </div>
-    </div>
-    <!-- Add more FAQ items here -->
-    <div class="faq-item">
-        <input type="checkbox" id="question3">
-        <label for="question3">Я боюсь, что эспандер порвется и ударит меня.</label>
-        <div class="answer">
-            <p>Ответ на вопрос.</p>
+                <div class="faq-item" onclick="toggleAnswer(3)">
+            <div class="faq-question">
+                <p>Можно ли заниматься с эспандерами СОСАТЬ РАКИ?</p>
+                <span id="arrow-3" class="arrow-right">&#9656;</span>
+            </div>
+            <div id="answer-3" class="faq-answer">
+                <p>Ответ на вопрос.</p>
+            </div>
         </div>
-    </div>
-    <div class="faq-item">
-        <input type="checkbox" id="question4">
-        <label for="question4">Можно ли заниматься с эспандерами мужчинам?</label>
-        <div class="answer">
-            <p>Ответ на вопрос.</p>
+                <div class="faq-item" onclick="toggleAnswer(4)">
+            <div class="faq-question">
+                <p>Можно ли заниматься с эспандерами МНЕ?</p>
+                <span id="arrow-4" class="arrow-right">&#9656;</span>
+            </div>
+            <div id="answer-4" class="faq-answer">
+                <p>Ответ на вопрос.</p>
+            </div>
         </div>
-    </div>
-    <!-- Add more FAQ items here -->
-    <div class="faq-item">
-        <input type="checkbox" id="question5">
-        <label for="question5">Я боюсь, что эспандер порвется и ударит меня.</label>
-        <div class="answer">
-            <p>Ответ на вопрос.</p>
+                <div class="faq-item" onclick="toggleAnswer(5)">
+            <div class="faq-question">
+                <p>Можно ли заниматься с эспандерами женщинам?</p>
+                <span id="arrow-5" class="arrow-right">&#9656;</span>
+            </div>
+            <div id="answer-5" class="faq-answer">
+                <p>Ответ на вопрос.</p>
+            </div>
         </div>
+        <!-- Добавьте остальные вопросы и ответы здесь -->
+    </main>
+    <div class="button-container">
+        <button class="styled-button-1">
+            <img src="{{ url_for('static', filename='img/tg-logo.png') }}" alt="Icon" class="button-icon" />
+            Задать вопрос
+        </button>
+        <button class="styled-button-2">
+            <img src="{{ url_for('static', filename='img/whatsapp-logo.png') }}" alt="Icon" class="button-icon" />
+            Задать вопрос
+        </button>
     </div>
-    <div class="faq-item">
-        <input type="checkbox" id="question6">
-        <label for="question6">Можно ли заниматься с эспандерами мужчинам?</label>
-        <div class="answer">
-            <p>Ответ на вопрос.</p>
-        </div>
-    </div>
-    <!-- Add more FAQ items here -->
-    <div class="faq-item">
-        <input type="checkbox" id="question7">
-        <label for="question7">Я боюсь, что эспандер порвется и ударит меня.</label>
-        <div class="answer">
-            <p>Ответ на вопрос.</p>
-        </div>
-    </div>
-    <div class="faq-item">
-        <input type="checkbox" id="question8">
-        <label for="question8">Можно ли заниматься с эспандерами мужчинам?</label>
-        <div class="answer">
-            <p>Ответ на вопрос.</p>
-        </div>
-    </div>
-    <!-- Add more FAQ items here -->
 </div>
+
+<script>
+function toggleAnswer(index) {
+    var answer = document.getElementById('answer-' + index);
+    var arrow = document.getElementById('arrow-' + index);
+    if (answer.style.display === 'block') {
+        answer.style.display = 'none';
+        arrow.classList.remove('arrow-down');
+        arrow.classList.add('arrow-right');
+    } else {
+        answer.style.display = 'block';
+        arrow.classList.remove('arrow-right');
+        arrow.classList.add('arrow-down');
+    }
+}
+</script>
 {% endblock %}
