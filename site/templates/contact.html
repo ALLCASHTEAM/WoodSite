@@ -19,8 +19,8 @@
             </div>
             <div class="contact-form">
                 <h2>Свяжитесь с нами</h2>
-                <form method="post" action="{% url 'contact' %}">
-                    {% csrf_token %}
+                <form method="post" action="{{ url_for('contact') }}">
+
                     <div>
                         <label for="firstName">Имя</label>
                         <input type="text" id="firstName" name="firstName"/>
