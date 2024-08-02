@@ -30,7 +30,20 @@
             </div>
             <a id="contact-link" href="{{ url_for('contact') }}" class="nav-link">Контакты</a>
             <a id="faq-link" href="{{ url_for('faq') }}" class="nav-link">FAQ</a>
-            <span class="icon">👤</span>
+            <div class="dropdown">
+                <span class="icon dropdown-link" id="profile-menu-toggle">👤</span>
+                <div class="dropdown-content" id="profile-menu">
+                    {% if current_user.is_authenticated %}
+                        <p>{{ current_user.first_name }} {{ current_user.second_name }}{% if current_user.father_name %} {{ current_user.father_name }}{% endif %}</p>
+                        <p>Суммарная покупка: {{ current_user.total_purchase }}%</p>
+                        <a href="{{ url_for('order_history') }}">История заказов</a>
+                        <a href="{{ url_for('logout') }}">Выход</a>
+                    {% else %}
+                        <a href="{{ url_for('login') }}">Войти</a>
+                        <a href="{{ url_for('reg') }}">Зарегистрироваться</a>
+                    {% endif %}
+                </div>
+            </div>
             <span class="icon">🛒</span>
         </div>
     </header>
@@ -92,4 +105,28 @@
     } else if (currentLocation.includes('/faq')) {
         document.getElementById('faq-link').classList.add('active');
     }
+
+        //show/hide profile
+
+    document.addEventListener('DOMContentLoaded', function() {
+            const profileMenuToggle = document.getElementById('profile-menu-toggle');
+            const profileMenu = document.getElementById('profile-menu');
+
+            profileMenuToggle.addEventListener('click', function() {
+                if (profileMenu.classList.contains('show')) {
+                    profileMenu.classList.remove('show');
+                    profileMenu.classList.add('hide');
+                } else {
+                    profileMenu.classList.remove('hide');
+                    profileMenu.classList.add('show');
+                }
+            });
+
+            document.addEventListener('click', function(event) {
+                if (!profileMenu.contains(event.target) && !profileMenuToggle.contains(event.target)) {
+                    profileMenu.classList.remove('show');
+                    profileMenu.classList.add('hide');
+                }
+            });
+        });
 </script>
