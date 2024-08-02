@@ -1,12 +1,14 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from flask_wtf import FlaskForm
-from wtforms import StringField, FloatField, IntegerField, TextAreaField, FileField, SubmitField, DecimalField
-from wtforms.validators import DataRequired, NumberRange
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField, FloatField, TextAreaField, FileField, SubmitField, DecimalField
+from wtforms.validators import DataRequired, Email, NumberRange
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from flask_wtf.file import FileRequired, FileAllowed
-from werkzeug.security import generate_password_hash
+import email_validator
 import os
 
 app = Flask(__name__)
@@ -16,6 +18,15 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = 'uploads/images'
 
 db = SQLAlchemy(app)
+login_manager = LoginManager()
+login_manager.login_view = 'login'
+login_manager.init_app(app)
+
+
+# User loader function
+@login_manager.user_loader
+def load_user(user_id):
+    return UserData.query.get(int(user_id))
 
 
 class Product(db.Model):
@@ -38,6 +49,24 @@ class UserData(db.Model):
     father_name = db.Column(db.String(50), nullable=True)
     total_purchase = db.Column(db.Float, nullable=True)
 
+    def get_id(self):
+        return (self.user_id)
+
+    @property
+    def is_authenticated(self):
+        # Assume all users are authenticated
+        return True
+
+    @property
+    def is_active(self):
+        # Assume all users are active
+        return True
+
+    @property
+    def is_anonymous(self):
+        # No anonymous users
+        return False
+
 
 class Review(db.Model):
     review_id = db.Column(db.Integer, primary_key=True)
@@ -56,6 +85,13 @@ class Order(db.Model):
     amount = db.Column(db.Integer, nullable=False)
     total_price = db.Column(db.Float, nullable=False)
     date = db.Column(db.DateTime, nullable=False)
+
+
+class LoginForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    remember = BooleanField('Remember Me')
+    submit = SubmitField('Login')
 
 
 class ProductForm(FlaskForm):
@@ -144,9 +180,24 @@ def reg():
     return render_template('registration.html')
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html')
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = UserData.query.filter_by(mail=form.email.data).first()
+        if user and check_password_hash(user.password_hash, form.password.data):
+            login_user(user, remember=form.remember.data)
+            return redirect(url_for('index'))
+        else:
+            flash('Login Unsuccessful. Please check email and password', 'danger')
+    return render_template('login.html', form=form)
+
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 
 @app.route('/about')
@@ -190,6 +241,11 @@ def contact():
 @app.route('/faq')
 def faq():
     return render_template('faq.html')
+
+
+@app.route('/order_history')
+def order_history():
+    return render_template('order_history.html')
 
 
 if __name__ == '__main__':
