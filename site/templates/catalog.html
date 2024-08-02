@@ -5,32 +5,48 @@
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/catalog.css') }}">
 
-<div class="catalog-container">
-    <div class="sidebar">
-        <h3>Фильтры</h3>
-        <ul>
-            <li><a href="#">Столешницы</a></li>
-            <li><a href="#">Стулья</a></li>
-            <li><a href="#">Шкафы</a></li>
-            <li><a href="#">Кресла</a></li>
-        </ul>
-    </div>
-    <div class="product-grid">
-        {% for product in products %}
-        <div class="product-card">
-            <div class="product-images">
-                {% for image in product.images %}
-                <img src="{{ url_for('static', filename=image) }}" alt="{{ product.name }}">
-                {% endfor %}
-            </div>
-            <div class="product-info">
-                <h4>{{ product.name }}</h4>
-                <button class="price-button">{{ product.price }} руб.</button>
-                <button class="add-to-cart">В корзину</button>
-                <button class="wishlist">&#10084;</button>
-            </div>
+<div class="categories">
+    {% for category in categories %}
+        <div class="category-item">
+            <a href="#">{{ category.name }}</a>
         </div>
+    {% endfor %}
+</div>
+
+<div class="catalog-container">
+    <div class="filters">
+        <h3>Фильтры</h3>
+        <form>
+            <input type="text" placeholder="Поиск">
+            <div>
+                <input type="checkbox"> Фильтр 1
+            </div>
+            <div>
+                <input type="checkbox"> Фильтр 2
+            </div>
+            <div>
+                <input type="checkbox"> Фильтр 3
+            </div>
+            <div>
+                <input type="checkbox"> Фильтр 4
+            </div>
+            <div>
+                <input type="checkbox"> Фильтр 5
+            </div>
+            <button type="submit" class="apply-filters-btn">Применить фильтры</button>
+        </form>
+    </div>
+
+    <div class="products">
+        {% for product in products %}
+            <div class="product-card">
+                <img src="{{ url_for('static', filename=product.images_path) }}" alt="{{ product.name }}">
+                <div class="price">{{ product.price }} руб.</div>
+                <div class="add-to-cart">В корзину</div>
+                <div class="favorite"></div>
+            </div>
         {% endfor %}
     </div>
 </div>
+
 {% endblock %}

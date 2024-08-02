@@ -38,6 +38,25 @@ class Product(db.Model):
     description = db.Column(db.Text, nullable=True)
     discount = db.Column(db.Float, nullable=True)
     status = db.Column(db.String(50), nullable=False)
+    category_id = db.Column(db.Integer, db.ForeignKey('category.category_id'), nullable=False)
+
+
+class ContactMe(db.Model):
+    request_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    surname = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+    message = db.Column(db.String(500), nullable=False)
+
+
+# Initialize the database with categories
+def init_db():
+    db.create_all()
+    categories = ["Столешницы", "Стулья", "Шкафы", "Кресла", "Принадлежности", "Скамейки", "Кровати", "Декор"]
+    for cat_name in categories:
+        category = Category(name=cat_name)
+        db.session.add(category)
+    db.session.commit()
 
 
 class UserData(db.Model):
@@ -66,6 +85,11 @@ class UserData(db.Model):
     def is_anonymous(self):
         # No anonymous users
         return False
+
+
+class Category(db.Model):
+    category_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
 
 
 class Review(db.Model):
@@ -205,32 +229,11 @@ def about():
     return render_template('about.html')
 
 
-@app.route('/catalog')
+@app.route('/catalog', methods=['GET'])
 def catalog():
+    categories = Category.query.all()
     products = Product.query.all()
-    product_data = []
-
-    for product in products:
-        if product.images_path:  # Check if images_path is not None
-            image_folder = os.path.join(app.root_path, product.images_path)
-            print(image_folder, "====================================================================")
-            if os.path.exists(image_folder):
-                images = [os.path.join(product.images_path, img) for img in os.listdir(image_folder)]
-
-                print( "+++++++++++++++++++++")
-            else:
-                images = []
-                print("secondIF")
-        else:
-            images = []  # Or set a default image path if needed
-        product_data.append({
-            'name': product.name,
-            'price': product.price,
-            'images': images
-        })
-        print(images)
-
-    return render_template('catalog.html', products=product_data)
+    return render_template('catalog.html', categories=categories, products=products)
 
 
 @app.route('/contact')
@@ -250,5 +253,5 @@ def order_history():
 
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all()
+        init_db()
     app.run(debug=True)

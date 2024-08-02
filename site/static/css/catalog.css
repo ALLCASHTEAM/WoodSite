@@ -1,68 +1,106 @@
+body {
+    background-color: #f4f4f4;
+}
+
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background-color: #e0e0e0;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.category-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+    flex: 1 1 calc(25% - 20px); /* 4 элемента в ряд */
+    margin: 10px;
+    box-sizing: border-box;
+}
+
 .catalog-container {
     display: flex;
-}
-
-.sidebar {
-    width: 20%;
-    padding: 10px;
-    background-color: #f8f8f8;
-}
-
-.product-grid {
-    width: 80%;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
+    flex-direction: row;
     padding: 20px;
 }
 
-.product-card {
-    position: relative;
+.filters {
+    width: 20%;
+    margin-right: 20px;
+    background-color: #fff;
+    padding: 10px;
     border: 1px solid #ddd;
-    border-radius: 5px;
-    overflow: hidden;
-    transition: transform 0.3s;
 }
 
-.product-card:hover {
-    transform: scale(1.05);
+.products {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
-.product-images img {
-    width: 100%;
-    display: block;
-}
-
-.product-info {
+.product-card {
+    width: 30%;
+    background-color: #fff;
+    border: 1px solid #ddd;
     padding: 10px;
+    margin-bottom: 20px;
     text-align: center;
+    position: relative;
 }
 
-.price-button {
-    display: block;
+.product-card img {
     width: 100%;
-    padding: 10px;
-    background-color: #ff9800;
-    color: #fff;
-    border: none;
-    cursor: pointer;
+    height: auto;
 }
 
-.add-to-cart, .wishlist {
+.product-card .price {
+    font-size: 20px;
+    color: #000;
+}
+
+.product-card .add-to-cart {
     display: none;
-    width: 100%;
-    padding: 10px;
-    background-color: #4caf50;
-    color: #fff;
-    border: none;
-    cursor: pointer;
 }
 
-.product-card:hover .add-to-cart,
-.product-card:hover .wishlist {
+.product-card:hover .price {
+    display: none;
+}
+
+.product-card:hover .add-to-cart {
     display: block;
 }
 
-.wishlist {
-    background-color: #f44336;
+.product-card .favorite {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+    background-image: url('path-to-heart-icon');
+}
+
+.product-card:hover .favorite {
+    display: block;
+}
+
+.apply-filters-btn {
+    background-color: #a75b24;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.apply-filters-btn:hover {
+    background-color: #8a491d;
 }
