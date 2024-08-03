@@ -1,69 +1,150 @@
 .contact-view {
+  min-height: 70vh;
   background-color: #fff8e7;
-  color: #333;
-  text-align: center;
-  font-family: Inter;
+  display: flex;
+  align-items: flex-start; /* Выравнивание по вертикали */
+  justify-content: center; /* Выравнивание по горизонтали */
+  font-family: "Inter";
 }
 
 .contact-page {
-  display: flex;
-  justify-content: center; /* Центрирование по горизонтали */
-  align-items: center; /* Центрирование по вертикали */
-  min-height: 66vh; /* Высота 100% экрана */
-  background-color: #fff8e7;
-  padding: 20px;
-}
-
-.contact-info,
-.contact-form {
-  max-width: 400px; /* Ограничение ширины для обоих блоков */
-  margin: 0 20px; /* Отступ между блоками */
-}
-
-.contact-info h2,
-.contact-form h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.contact-info p {
-  margin: 5px 0;
-  font-size: 18px;
-}
-
-.contact-form form {
-  display: flex;
-  flex-direction: column;
-}
-
-.contact-form form div {
-  margin-bottom: 15px;
-}
-
-.contact-form label {
-  font-size: 16px;
-  margin-bottom: 5px;
-}
-
-.contact-form input,
-.contact-form textarea {
   width: 100%;
-  padding: 8px;
+  max-width: 1200px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px; /* Отступ сверху */
+}
+
+.contact-info, .contact-form {
+  flex: 1;
+  margin: 20px;
+}
+
+.info {
+  margin-bottom: 24px;
   font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  color: #322;
+  display: flex;
+  align-items: center;
 }
 
-.contact-form button {
-  padding: 10px 20px;
-  background-color: #3396ff;
-  color: white;
+.icon-cont {
+  width: 60px;
+  height: 60px;
+  background-color: #3494db;
+  border-radius: 50%;
+  margin-right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-img {
+  width: 30px;
+  height: 30px;
+}
+
+p {
+  font-size: 22px;
+}
+
+.contact-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.textblock {
+  width: calc(50% - 10px);
+  height: 50px;
+  padding: 12px;
+  background-color: #f9f9f9;
+  border: 2px solid #3494db;
+  color: #333;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+  font-size: 20px;
+  font-family: "Inter";
+}
+
+.textblock:focus, textarea:focus {
+  border-color: #00b300;
+}
+
+textarea {
+  width: 100%;
+  min-height: 200px;
+  max-height: 400px;
+  resize: vertical;
+  padding: 12px;
+  background-color: #f9f9f9;
+  border: 2px solid #3494db;
+  color: #333;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+  font-size: 20px;
+  font-family: "Inter";
+}
+
+.btn {
+  width: 120px;
+  height: 40px;
+  background-color: #3494db;
   border: none;
-  border-radius: 5px;
-  font-size: 18px;
+  color: #fff;
+  text-transform: uppercase;
   cursor: pointer;
+  border: 2px solid #3494db;
+  transition: .3s linear;
+  border-radius: 5px;
 }
 
-.contact-form button:hover {
-  background-color: #0056b3;
-}l')
+.btn:hover {
+  background-color: transparent;
+  color: #3494db;
+}
+
+.heading {
+  width: 100%;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+  color: #322;
+  font-size: 36px;
+  text-align: center;
+}
+
+.map-container {
+  width: 100%;
+  margin-top: 10px;
+  border: 2px solid #3494db;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 980px) {
+  .contact-page {
+    max-width: 600px;
+  }
+
+  .heading {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .contact-info, .contact-form {
+    flex: 100%;
+    margin-bottom: 20px;
+  }
+
+  .textblock {
+    width: 100%;
+  }
+}

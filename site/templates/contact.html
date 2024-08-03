@@ -4,42 +4,51 @@
 
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
-
 <div class="contact-view">
     <main>
         <div class="contact-page">
+            <h2 class="heading">Контакты мастерской</h2>
             <div class="contact-info">
-                <h2>Контакты</h2>
-                <p>Адрес</p>
-                <p>Москва, Вешних Вод, д 14, стр.2</p>
-                <p>Email</p>
-                <p>contact@gmail.com</p>
-                <p>Телефон</p>
-                <p>+79182315619</p>
+                <div class="info">
+                    <i class="icon-cont fa-home">
+                        <img src="{{ url_for('static', filename='img/home-ico.png') }}" alt="Home" class="icon-img">
+                    </i>
+                    <p>Москва, Вешних Вод, д 14, стр.2</p>
+                </div>
+                <div class="info">
+                    <i class="icon-cont fa-phone">
+                        <img src="{{ url_for('static', filename='img/phone-ico.png') }}" alt="Phone" class="icon-img">
+                    </i>
+                    <p>+0 000 0000000</p>
+                </div>
+                <div class="info">
+                    <i class="icon-cont fa-envelope">
+                        <img src="{{ url_for('static', filename='img/email-ico.png') }}" alt="Email" class="icon-img">
+                    </i>
+                    <p>email@address.com</p>
+                </div>
+                <div class="info">
+                    <i class="icon-cont fa-clock">
+                        <img src="{{ url_for('static', filename='img/clock-ico.png') }}" alt="Clock" class="icon-img">
+                    </i>
+                    <p>Понедельник-пятница 10:00-18:00 <br> Суббота-воскресенье 10:00-15:00</p>
+                </div>
             </div>
-            <div class="contact-form">
-                <h2>Свяжитесь с нами</h2>
-                <form method="post" action="{{ url_for('contact') }}">
-
-                    <div>
-                        <label for="firstName">Имя</label>
-                        <input type="text" id="firstName" name="firstName"/>
-                    </div>
-                    <div>
-                        <label for="lastName">Фамилия</label>
-                        <input type="text" id="lastName" name="lastName"/>
-                    </div>
-                    <div>
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email"/>
-                    </div>
-                    <div>
-                        <label for="message">Сообщение</label>
-                        <textarea id="message" name="message"></textarea>
-                    </div>
-                    <button type="submit">Отправить сообщение</button>
-                </form>
-            </div>
+            <form action="" class="contact-form">
+                <input type="text" class="textblock" placeholder="Введите имя" required>
+                <input type="email" class="textblock" placeholder="Введите почту" required>
+                <textarea placeholder="Введите сообщение" required></textarea>
+                <input type="submit" class="btn" value='Send'>
+            </form>
+        </div>
+        <div class="map-container">
+            <iframe
+                src="https://yandex.ru/map-widget/v1/?um=constructor%3A5f5f1e2c59b4b3b7e51e8fb2e2c87b0ed2c50b15a20ec8dfc61e1ee1423cf4c1&amp;source=constructor&ll=37.751197%2C55.919982&z=17&pt=37.751197,55.919982,pm2dgl"
+                width="100%"
+                height="600"
+                frameborder="0"
+                allowfullscreen="true">
+            </iframe>
         </div>
     </main>
 </div>

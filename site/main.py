@@ -28,7 +28,6 @@ login_manager.init_app(app)
 def load_user(user_id):
     return UserData.query.get(int(user_id))
 
-
 class Product(db.Model):
     product_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
