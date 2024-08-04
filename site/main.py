@@ -28,6 +28,7 @@ login_manager.init_app(app)
 def load_user(user_id):
     return UserData.query.get(int(user_id))
 
+
 class Product(db.Model):
     product_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
@@ -43,7 +44,6 @@ class Product(db.Model):
 class ContactMe(db.Model):
     request_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    surname = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False)
     message = db.Column(db.String(500), nullable=False)
 
@@ -55,7 +55,7 @@ def init_db():
     for cat_name in categories:
         category = Category(name=cat_name)
         db.session.add(category)
-    db.session.commit()
+    ##db.session.commit()
 
 
 class UserData(db.Model):
@@ -127,47 +127,6 @@ class ProductForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
-@app.route('/crm', methods=['GET', 'POST'])
-def crm():
-    form = ProductForm()
-    if form.validate_on_submit():
-        # Save the product first to generate an ID
-        new_product = Product(
-            name=form.name.data,
-            price=form.price.data,
-            amount=form.amount.data,
-            description=form.description.data,
-            discount=form.discount.data,
-            status='active'
-        )
-        db.session.add(new_product)
-        db.session.commit()
-
-        # Now save the images
-        product_id = new_product.product_id
-        image_folder = os.path.join(app.config['UPLOAD_FOLDER'], f'product_{product_id}')
-        os.makedirs(image_folder, exist_ok=True)
-
-        # Save each file in the uploaded files
-        for file in request.files.getlist('images_path'):
-            if file and file.filename:
-                file.save(os.path.join(image_folder, file.filename))
-
-        # Update the product with the image path
-        new_product.images_path = f'uploads/images/product_{product_id}'
-        db.session.commit()
-
-        return redirect(url_for('crm'))
-    return render_template('crm.html', form=form)
-
-
-admin = Admin(app, name='CRM', template_mode='bootstrap3')
-admin.add_view(ModelView(Product, db.session))
-admin.add_view(ModelView(UserData, db.session))
-admin.add_view(ModelView(Review, db.session))
-admin.add_view(ModelView(Order, db.session))
-
-
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -187,7 +146,7 @@ def reg():
             # Add a flash message or any kind of alert that passwords do not match
             return redirect(url_for('register'))
 
-        hashed_password = generate_password_hash(password, method='sha256')
+        hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
         new_user = UserData(
             mail=email,
             password_hash=hashed_password,
@@ -235,8 +194,27 @@ def catalog():
     return render_template('catalog.html', categories=categories, products=products)
 
 
-@app.route('/contact')
+@app.route('/contact', methods=['GET','POST'])
 def contact():
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        message = request.form['message']
+
+        if not name or not email or not message:
+            flash('Все поля должны быть заполнены.', 'error')
+            return redirect(url_for('contact'))
+
+        if '@' not in email or '.' not in email:
+            flash('Введите корректный email.', 'error')
+            return redirect(url_for('contact'))
+
+        new_contact = ContactMe(name=name, email=email, message=message)
+        db.session.add(new_contact)
+        db.session.commit()
+
+        flash('Сообщение отправлено.', 'success')
+        return redirect(url_for('contact'))
     return render_template('contact.html')
 
 
