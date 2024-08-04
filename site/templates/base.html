@@ -15,10 +15,16 @@
         <div class="flex-container" style="gap: 20px; padding-right: 1%">
             <a id="home-link" href="{{ url_for('index') }}" class="nav-link">Главная</a>
             <a id="about-link" href="{{ url_for('about') }}" class="nav-link">О нас</a>
-            <div id="catalog-link" class="dropdown nav-link">
+            <div id="catalog-link" class="dropdown-catalog nav-link">
                 <a href="{{ url_for('catalog') }}" class="nav-link-kat">Каталог</a>
-                <div class="dropdown-content">
-                    <a href="#">Столешницы</a>
+                <div class="dropdown-content-catalog">
+                    <div class="submenu">
+                        <a href="#">Столешницы <span class="arrow">&#9654;</span></a>
+                        <div class="dropdown-content-submenu">
+                            <a href="#">Деревянные</a>
+                            <a href="#">Железные</a>
+                        </div>
+                    </div>
                     <a href="#">Стулья</a>
                     <a href="#">Шкафы</a>
                     <a href="#">Кресла</a>
@@ -30,9 +36,9 @@
             </div>
             <a id="contact-link" href="{{ url_for('contact') }}" class="nav-link">Контакты</a>
             <a id="faq-link" href="{{ url_for('faq') }}" class="nav-link">FAQ</a>
-            <div class="dropdown">
-                <span class="icon dropdown-link" id="profile-menu-toggle">👤</span>
-                <div class="dropdown-content" id="profile-menu">
+            <div class="dropdown-profile">
+                <span class="icon" id="profile-menu-toggle">👤</span>
+                <div class="dropdown-content-profile" id="profile-menu">
                     {% if current_user.is_authenticated %}
                         <p>{{ current_user.first_name }} {{ current_user.second_name }}{% if current_user.father_name %} {{ current_user.father_name }}{% endif %}</p>
                         <p>Суммарная покупка: {{ current_user.total_purchase }}%</p>
@@ -106,27 +112,26 @@
         document.getElementById('faq-link').classList.add('active');
     }
 
-        //show/hide profile
-
+//show/hide profile
     document.addEventListener('DOMContentLoaded', function() {
-            const profileMenuToggle = document.getElementById('profile-menu-toggle');
-            const profileMenu = document.getElementById('profile-menu');
+        const profileMenuToggle = document.getElementById('profile-menu-toggle');
+        const profileMenu = document.getElementById('profile-menu');
 
-            profileMenuToggle.addEventListener('click', function() {
-                if (profileMenu.classList.contains('show')) {
-                    profileMenu.classList.remove('show');
-                    profileMenu.classList.add('hide');
-                } else {
-                    profileMenu.classList.remove('hide');
-                    profileMenu.classList.add('show');
-                }
-            });
-
-            document.addEventListener('click', function(event) {
-                if (!profileMenu.contains(event.target) && !profileMenuToggle.contains(event.target)) {
-                    profileMenu.classList.remove('show');
-                    profileMenu.classList.add('hide');
-                }
-            });
+        profileMenuToggle.addEventListener('click', function() {
+            if (profileMenu.classList.contains('show')) {
+                profileMenu.classList.remove('show');
+                profileMenu.classList.add('hide');
+            } else {
+                profileMenu.classList.remove('hide');
+                profileMenu.classList.add('show');
+            }
         });
+
+        document.addEventListener('click', function(event) {
+            if (!profileMenu.contains(event.target) && !profileMenuToggle.contains(event.target)) {
+                profileMenu.classList.remove('show');
+                profileMenu.classList.add('hide');
+            }
+        });
+    });
 </script>
