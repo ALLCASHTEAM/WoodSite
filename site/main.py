@@ -127,47 +127,6 @@ class ProductForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
-@app.route('/crm', methods=['GET', 'POST'])
-def crm():
-    form = ProductForm()
-    if form.validate_on_submit():
-        # Save the product first to generate an ID
-        new_product = Product(
-            name=form.name.data,
-            price=form.price.data,
-            amount=form.amount.data,
-            description=form.description.data,
-            discount=form.discount.data,
-            status='active'
-        )
-        db.session.add(new_product)
-        db.session.commit()
-
-        # Now save the images
-        product_id = new_product.product_id
-        image_folder = os.path.join(app.config['UPLOAD_FOLDER'], f'product_{product_id}')
-        os.makedirs(image_folder, exist_ok=True)
-
-        # Save each file in the uploaded files
-        for file in request.files.getlist('images_path'):
-            if file and file.filename:
-                file.save(os.path.join(image_folder, file.filename))
-
-        # Update the product with the image path
-        new_product.images_path = f'uploads/images/product_{product_id}'
-        db.session.commit()
-
-        return redirect(url_for('crm'))
-    return render_template('crm.html', form=form)
-
-
-admin = Admin(app, name='CRM', template_mode='bootstrap3')
-admin.add_view(ModelView(Product, db.session))
-admin.add_view(ModelView(UserData, db.session))
-admin.add_view(ModelView(Review, db.session))
-admin.add_view(ModelView(Order, db.session))
-
-
 @app.route('/')
 def index():
     return render_template('index.html')
