@@ -44,7 +44,6 @@ class Product(db.Model):
 class ContactMe(db.Model):
     request_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    surname = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False)
     message = db.Column(db.String(500), nullable=False)
 
@@ -236,8 +235,27 @@ def catalog():
     return render_template('catalog.html', categories=categories, products=products)
 
 
-@app.route('/contact')
+@app.route('/contact', methods=['GET','POST'])
 def contact():
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        message = request.form['message']
+
+        if not name or not email or not message:
+            flash('Все поля должны быть заполнены.', 'error')
+            return redirect(url_for('contact'))
+
+        if '@' not in email or '.' not in email:
+            flash('Введите корректный email.', 'error')
+            return redirect(url_for('contact'))
+
+        new_contact = ContactMe(name=name, email=email, message=message)
+        db.session.add(new_contact)
+        db.session.commit()
+
+        flash('Сообщение отправлено.', 'success')
+        return redirect(url_for('contact'))
     return render_template('contact.html')
 
 
