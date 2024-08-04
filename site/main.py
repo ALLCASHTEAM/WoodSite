@@ -28,6 +28,7 @@ login_manager.init_app(app)
 def load_user(user_id):
     return UserData.query.get(int(user_id))
 
+
 class Product(db.Model):
     product_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
@@ -55,7 +56,7 @@ def init_db():
     for cat_name in categories:
         category = Category(name=cat_name)
         db.session.add(category)
-    db.session.commit()
+    ##db.session.commit()
 
 
 class UserData(db.Model):
@@ -187,7 +188,7 @@ def reg():
             # Add a flash message or any kind of alert that passwords do not match
             return redirect(url_for('register'))
 
-        hashed_password = generate_password_hash(password, method='sha256')
+        hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
         new_user = UserData(
             mail=email,
             password_hash=hashed_password,
