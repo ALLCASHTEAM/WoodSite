@@ -9,6 +9,7 @@
 <body>
     <div class="background"></div>
     <div class="login-container">
+        <a href="{{ url_for('index') }}" class="back-arrow">&#8592; Назад</a> <!-- Добавлено -->
         <form class="login-form" action="{{ url_for('reg') }}" method="POST">
             <h2>Регистрация</h2>
             <div class="input-group">
@@ -18,10 +19,6 @@
             <div class="input-group">
                 <label for="second_name">Фамилия</label>
                 <input type="text" id="second_name" name="second_name" required>
-            </div>
-            <div class="input-group">
-                <label for="father_name">Отчество (опционально)</label>
-                <input type="text" id="father_name" name="father_name">
             </div>
             <div class="input-group">
                 <label for="email">Введите почту</label>

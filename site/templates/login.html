@@ -9,6 +9,7 @@
 <body>
     <div class="background"></div>
     <div class="login-container">
+        <a href="{{ url_for('index') }}" class="back-arrow">&#8592; Назад</a>
         <form class="login-form" method="POST">
             {{ form.hidden_tag() }}
             <h2>Вход</h2>

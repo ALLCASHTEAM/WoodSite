@@ -8,49 +8,52 @@
 </head>
 <body>
     <header class="header">
-        <div class="logo">
-            <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="Логотип компании" />
-            <h1>WOODSHOP</h1>
-        </div>
-        <div class="flex-container" style="gap: 20px; padding-right: 1%">
-            <a id="home-link" href="{{ url_for('index') }}" class="nav-link">Главная</a>
-            <a id="about-link" href="{{ url_for('about') }}" class="nav-link">О нас</a>
-            <div id="catalog-link" class="dropdown-catalog nav-link">
-                <a href="{{ url_for('catalog') }}" class="nav-link-kat">Каталог</a>
-                <div class="dropdown-content-catalog">
-                    <div class="submenu">
-                        <a href="#">Столешницы <span class="arrow">&#9654;</span></a>
-                        <div class="dropdown-content-submenu">
-                            <a href="#">Деревянные</a>
-                            <a href="#">Железные</a>
+        <div class="header-container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="Логотип компании" />
+                    <h1>WOODSHOP</h1>
+                </div>
+                <div class="flex-container">
+                    <a id="home-link" href="{{ url_for('index') }}" class="nav-link">Главная</a>
+                    <a id="about-link" href="{{ url_for('about') }}" class="nav-link">О нас</a>
+                    <div id="catalog-link" class="dropdown-catalog nav-link">
+                        <a href="{{ url_for('catalog') }}" class="nav-link-kat">Каталог</a>
+                        <div class="dropdown-content-catalog">
+                            <div class="submenu">
+                                <a href="#">Столешницы <span class="arrow">&#9654;</span></a>
+                                <div class="dropdown-content-submenu">
+                                    <a href="#">Деревянные</a>
+                                    <a href="#">Железные</a>
+                                </div>
+                            </div>
+                            <a href="#">Стулья</a>
+                            <a href="#">Шкафы</a>
+                            <a href="#">Кресла</a>
+                            <a href="#">Принадлежности</a>
+                            <a href="#">Скамейки</a>
+                            <a href="#">Кровати</a>
+                            <a href="#">Декор</a>
                         </div>
                     </div>
-                    <a href="#">Стулья</a>
-                    <a href="#">Шкафы</a>
-                    <a href="#">Кресла</a>
-                    <a href="#">Принадлежности</a>
-                    <a href="#">Скамейки</a>
-                    <a href="#">Кровати</a>
-                    <a href="#">Декор</a>
+                    <a id="contact-link" href="{{ url_for('contact') }}" class="nav-link">Контакты</a>
+                    <a id="faq-link" href="{{ url_for('faq') }}" class="nav-link">FAQ</a>
+                    <div class="dropdown-profile">
+                        <span class="icon" id="profile-menu-toggle">👤</span>
+                        <div class="dropdown-content-profile" id="profile-menu">
+                            {% if current_user.is_authenticated %}
+                                <p>{{ current_user.first_name }} {{ current_user.second_name }}{% if current_user.father_name %} {{ current_user.father_name }}{% endif %}</p>
+                                <a href="{{ url_for('order_history') }}">История заказов</a>
+                                <a href="{{ url_for('logout') }}">Выход</a>
+                            {% else %}
+                                <a href="{{ url_for('login') }}">Войти</a>
+                                <a href="{{ url_for('reg') }}">Зарегистрироваться</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <span class="icon">🛒</span>
                 </div>
             </div>
-            <a id="contact-link" href="{{ url_for('contact') }}" class="nav-link">Контакты</a>
-            <a id="faq-link" href="{{ url_for('faq') }}" class="nav-link">FAQ</a>
-            <div class="dropdown-profile">
-                <span class="icon" id="profile-menu-toggle">👤</span>
-                <div class="dropdown-content-profile" id="profile-menu">
-                    {% if current_user.is_authenticated %}
-                        <p>{{ current_user.first_name }} {{ current_user.second_name }}{% if current_user.father_name %} {{ current_user.father_name }}{% endif %}</p>
-                        <p>Суммарная покупка: {{ current_user.total_purchase }}%</p>
-                        <a href="{{ url_for('order_history') }}">История заказов</a>
-                        <a href="{{ url_for('logout') }}">Выход</a>
-                    {% else %}
-                        <a href="{{ url_for('login') }}">Войти</a>
-                        <a href="{{ url_for('reg') }}">Зарегистрироваться</a>
-                    {% endif %}
-                </div>
-            </div>
-            <span class="icon">🛒</span>
         </div>
     </header>
 
@@ -59,43 +62,46 @@
     </main>
 
     <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-info">
-                <p><em>Контакты</em></p>
-                <p>Адрес<br />Москва, Вешних Вод, д 14, стр.2</p>
-                <p>Email<br />contact@gmail.com</p>
-                <p>Телефон<br />+79182315619</p>
-            </div>
-            <div class="footer-catalog-1">
-                <p>Столешницы</p>
-                <p>Стулья</p>
-                <p>Шкафы</p>
-                <p>Кресла</p>
-            </div>
-            <div class="footer-catalog-2">
-                <p>Принадлежности</p>
-                <p>Скамейки</p>
-                <p>Кровати</p>
-                <p>Декор</p>
-            </div>
-            <div class="footer-brand">
-                <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="Logo Image" class="logo-image" />
-                <div>
-                    <h2 class="naming">WOODSHOP</h2>
-                    <p>Пользовательское соглашение</p>
-                    <p>Политика конфиденциальности</p>
-                    <p>Обработка персональных данных</p>
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <p><em>Контакты</em></p>
+                    <p>Адрес<br />Москва, Вешних Вод, д 14, стр.2</p>
+                    <p>Email<br />contact@gmail.com</p>
+                    <p>Телефон<br />+79182315619</p>
                 </div>
-                <div class="footer-images">
-                    <img src="{{ url_for('static', filename='img/tg-logo.png') }}" alt="Telegram" />
-                    <img src="{{ url_for('static', filename='img/vk-logo.png') }}" alt="Vkontakte" />
-                    <img src="{{ url_for('static', filename='img/whatsapp-logo.png') }}" alt="WhatsApp" />
+                <div class="footer-catalog-1">
+                    <p>Столешницы</p>
+                    <p>Стулья</p>
+                    <p>Шкафы</p>
+                    <p>Кресла</p>
+                </div>
+                <div class="footer-catalog-2">
+                    <p>Принадлежности</p>
+                    <p>Скамейки</p>
+                    <p>Кровати</p>
+                    <p>Декор</p>
+                </div>
+                <div class="footer-brand">
+                    <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="Logo Image" class="logo-image" />
+                    <div>
+                        <h2 class="naming">WOODSHOP</h2>
+                        <p>Пользовательское соглашение</p>
+                        <p>Политика конфиденциальности</p>
+                        <p>Обработка персональных данных</p>
+                    </div>
+                    <div class="footer-images">
+                        <img src="{{ url_for('static', filename='img/tg-logo.png') }}" alt="Telegram" />
+                        <img src="{{ url_for('static', filename='img/vk-logo.png') }}" alt="Vkontakte" />
+                        <img src="{{ url_for('static', filename='img/whatsapp-logo.png') }}" alt="WhatsApp" />
+                    </div>
                 </div>
             </div>
         </div>
     </footer>
 </body>
 </html>
+
 <script>
         // Получаем текущий URL
     const currentLocation = window.location.pathname;

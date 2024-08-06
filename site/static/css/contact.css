@@ -2,13 +2,13 @@
   min-height: 70vh;
   background-color: #fff8e7;
   display: flex;
-  align-items: flex-start; /* Выравнивание по вертикали */
-  justify-content: center; /* Выравнивание по горизонтали */
+  align-items: flex-start;
+  justify-content: center;
   font-family: "Inter";
 }
 
 .contact-page {
-  width: 100%;
+  width: 100%; /* Установите ширину контейнера */
   max-width: 1200px;
   display: flex;
   align-items: flex-start;
@@ -18,7 +18,7 @@
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-top: 20px; /* Отступ сверху */
+  margin: 20px auto; /* Центрирование контейнера */
 }
 
 .contact-info, .contact-form {
@@ -129,6 +129,7 @@ textarea {
 
 @media screen and (max-width: 980px) {
   .contact-page {
+    width: 90%; /* Измените ширину контейнера на меньших экранах */
     max-width: 600px;
   }
 
