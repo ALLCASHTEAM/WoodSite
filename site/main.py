@@ -240,7 +240,6 @@ def manage_products():
     return render_template('crm.html', products=products, orders=orders, reviews=reviews, users=users)
 
 
-
 @app.route('/products/delete/<int:product_id>', methods=['POST'])
 def delete_product(product_id):
     product = Product.query.get(product_id)
