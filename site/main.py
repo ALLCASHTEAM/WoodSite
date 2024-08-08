@@ -194,6 +194,61 @@ def catalog():
     return render_template('catalog.html', categories=categories, products=products)
 
 
+# Форма для создания/редактирования продукта
+@app.route('/products', methods=['GET', 'POST'])
+def manage_products():
+    if request.method == 'POST':
+        product_id = request.form.get('product_id')
+        name = request.form.get('name')
+        price = request.form.get('price')
+        amount = request.form.get('amount')
+        description = request.form.get('description')
+        discount = request.form.get('discount')
+        status = request.form.get('status')
+        category_id = request.form.get('category_id')
+
+        if product_id:  # Обновление существующего продукта
+            product = Product.query.get(product_id)
+            product.name = name
+            product.price = price
+            product.amount = amount
+            product.description = description
+            product.discount = discount
+            product.status = status
+            product.category_id = category_id
+        else:  # Создание нового продукта
+            new_product = Product(
+                name=name,
+                price=price,
+                amount=amount,
+                description=description,
+                discount=discount,
+                status=status,
+                category_id=category_id
+            )
+            db.session.add(new_product)
+        db.session.commit()
+        return redirect(url_for('manage_products'))
+
+    # Получение всех данных для отображения в соответствующих вкладках
+    products = Product.query.all()
+    orders = Order.query.all()
+    reviews = Review.query.all()
+    users = UserData.query.all()
+
+    # Передача данных в шаблон
+    return render_template('crm.html', products=products, orders=orders, reviews=reviews, users=users)
+
+
+
+@app.route('/products/delete/<int:product_id>', methods=['POST'])
+def delete_product(product_id):
+    product = Product.query.get(product_id)
+    db.session.delete(product)
+    db.session.commit()
+    return redirect(url_for('manage_products'))
+
+
 @app.route('/contact', methods=['GET','POST'])
 def contact():
     if request.method == 'POST':
