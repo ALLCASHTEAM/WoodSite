@@ -41,7 +41,6 @@
         <div class="products">
             {% for product in products %}
                 <div class="product-card">
-                    <img src="{{ url_for('static', filename=product.images_path) }}" alt="{{ product.name }}">
                     <div class="price">{{ product.price }} руб.</div>
                     <div class="add-to-cart">В корзину</div>
                     <div class="favorite"></div>
