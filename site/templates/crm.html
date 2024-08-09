@@ -74,7 +74,7 @@
                         <div>
                             <div>
                                 {% for image in product.images %}
-                                <img src="{{ url_for('static', filename=image.image_url) }}" alt="Product Image" style="width: 50px; height: 50px;">
+                                <img src="{{ url_for('static', filename=image.image_url.replace('\\', '/')) }}" alt="Product Image" style="width: 100px; height: 100px;">
                                 {% endfor %}
                             </div>
                             <button class="btn btn-warning btn-sm" onclick="editProduct({{ product.product_id }}, '{{ product.name }}', {{ product.price }}, {{ product.amount }}, '{{ product.description }}', {{ product.discount }}, '{{ product.status }}', {{ product.category_id }})">Edit</button>

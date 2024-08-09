@@ -20,7 +20,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'we-smoke-woods-and-no-one-will-know'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///wood.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['UPLOAD_FOLDER'] = 'uploads/images'
+app.config['UPLOAD_FOLDER'] = 'static/uploads'
+
 
 db = SQLAlchemy(app)
 login_manager = LoginManager()
@@ -50,7 +51,7 @@ class Product(db.Model):
 class ProductImage(db.Model):
     image_id = db.Column(db.Integer, primary_key=True)
     product_id = db.Column(db.Integer, db.ForeignKey('product.product_id'), nullable=False)
-    image_url = db.Column(db.String(255), nullable=False)  # Путь к файлу изображения
+    image_url = db.Column(db.String(255), nullable=False)
 
 
 class ContactMe(db.Model):
@@ -132,7 +133,6 @@ class LoginForm(FlaskForm):
 class ProductForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     price = FloatField('Price', validators=[DataRequired()])
-    # убедитесь, что `render_kw={'multiple': True}` удалено или обрабатывается корректно
     images = FileField('Images', validators=[FileRequired(), FileAllowed(['jpg', 'png'], 'Images only!')])
     amount = IntegerField('Amount', validators=[DataRequired()])
     description = TextAreaField('Description')
@@ -165,7 +165,6 @@ def reg():
         confirm_password = request.form['confirm-password']
 
         if password != confirm_password:
-            # Add a flash message or any kind of alert that passwords do not match
             return redirect(url_for('register'))
 
         hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
@@ -218,7 +217,7 @@ def catalog():
 
 @app.route('/upload', methods=['POST'])
 def upload():
-    file = request.files['file']  # 'file' должен соответствовать имени поля в HTML-форме
+    file = request.files['file']
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
@@ -229,9 +228,9 @@ def upload():
 @app.route('/products', methods=['GET', 'POST'])
 def manage_products():
     form = ProductForm()
-
+    products = Product.query.all()
     if form.validate_on_submit():
-        # Создание и сохранение информации о продукте
+
         product = Product(
             name=form.name.data,
             price=form.price.data,
@@ -242,28 +241,26 @@ def manage_products():
             category_id=form.category_id.data
         )
         db.session.add(product)
-        db.session.flush()  # Используем flush, чтобы получить ID продукта для использования в связанных таблицах
+        db.session.flush()
 
-        # Обработка загрузки изображений
         if 'images' in request.files:
-            files = request.files.getlist('images')  # Получение всех файлов из формы
+            files = request.files.getlist('images')
             for file in files:
-                if file and allowed_file(file.filename):  # Проверка, разрешён ли файл
+                if file and allowed_file(file.filename):
                     filename = secure_filename(file.filename)
                     file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                    file.save(file_path)  # Сохранение файла
+                    file.save(file_path)
 
-                    # Создание записи в базе данных для изображения продукта
-                    image = ProductImage(product_id=product.product_id, image_url=file_path)
+                    relative_path = os.path.join('uploads', filename).replace('\\', '/')
+                    image = ProductImage(product_id=product.product_id, image_url=relative_path)
                     db.session.add(image)
 
-        db.session.commit()  # Подтверждение всех операций с базой данных
+        db.session.commit()
 
         flash('Product created successfully', 'success')
         return redirect(url_for('manage_products'))
 
-    return render_template('crm.html', form=form)
-
+    return render_template('crm.html', form=form, products=products)
 
 
 @app.route('/products/delete/<int:product_id>', methods=['POST'])
