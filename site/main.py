@@ -10,6 +10,11 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from flask_wtf.file import FileRequired, FileAllowed
 import email_validator
 import os
+from flask import request, redirect, url_for, flash
+from flask_wtf.file import FileField, FileAllowed, FileRequired
+from werkzeug.utils import secure_filename
+from werkzeug.datastructures import FileStorage
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'we-smoke-woods-and-no-one-will-know'
@@ -33,18 +38,19 @@ class Product(db.Model):
     product_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     price = db.Column(db.Float, nullable=False)
-    images_path = db.Column(db.String(200))
     amount = db.Column(db.Integer, nullable=False)
     description = db.Column(db.Text, nullable=True)
     discount = db.Column(db.Float, nullable=True)
     status = db.Column(db.String(50), nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('category.category_id'), nullable=False)
 
+    images = db.relationship('ProductImage', backref='product', lazy=True, cascade="all, delete-orphan")
+
 
 class ProductImage(db.Model):
     image_id = db.Column(db.Integer, primary_key=True)
     product_id = db.Column(db.Integer, db.ForeignKey('product.product_id'), nullable=False)
-    image_url = db.Column(db.String(255), nullable=False)  # или путь к файлу
+    image_url = db.Column(db.String(255), nullable=False)  # Путь к файлу изображения
 
 
 class ContactMe(db.Model):
@@ -126,16 +132,26 @@ class LoginForm(FlaskForm):
 class ProductForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     price = FloatField('Price', validators=[DataRequired()])
-    images_path = FileField('Images', validators=[FileRequired(), FileAllowed(['jpg', 'png'], 'Images only!')], render_kw={'multiple': True})
+    # убедитесь, что `render_kw={'multiple': True}` удалено или обрабатывается корректно
+    images = FileField('Images', validators=[FileRequired(), FileAllowed(['jpg', 'png'], 'Images only!')])
     amount = IntegerField('Amount', validators=[DataRequired()])
     description = TextAreaField('Description')
     discount = DecimalField('Discount', validators=[NumberRange(min=0, max=100)])
+    status = StringField('Status', validators=[DataRequired()])
+    category_id = IntegerField('Category ID', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+def allowed_file(filename):
+    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+    print("Проверка ебать")
+    print(filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS)
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 @app.route('/registration', methods=['GET', 'POST'])
@@ -200,50 +216,54 @@ def catalog():
     return render_template('catalog.html', categories=categories, products=products)
 
 
-# Форма для создания/редактирования продукта
+@app.route('/upload', methods=['POST'])
+def upload():
+    file = request.files['file']  # 'file' должен соответствовать имени поля в HTML-форме
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        return 'Файл успешно загружен'
+    return 'Ошибка загрузки файла'
+
+
 @app.route('/products', methods=['GET', 'POST'])
 def manage_products():
-    if request.method == 'POST':
-        product_id = request.form.get('product_id')
-        name = request.form.get('name')
-        price = request.form.get('price')
-        amount = request.form.get('amount')
-        description = request.form.get('description')
-        discount = request.form.get('discount')
-        status = request.form.get('status')
-        category_id = request.form.get('category_id')
+    form = ProductForm()
 
-        if product_id:  # Обновление существующего продукта
-            product = Product.query.get(product_id)
-            product.name = name
-            product.price = price
-            product.amount = amount
-            product.description = description
-            product.discount = discount
-            product.status = status
-            product.category_id = category_id
-        else:  # Создание нового продукта
-            new_product = Product(
-                name=name,
-                price=price,
-                amount=amount,
-                description=description,
-                discount=discount,
-                status=status,
-                category_id=category_id
-            )
-            db.session.add(new_product)
-        db.session.commit()
+    if form.validate_on_submit():
+        # Создание и сохранение информации о продукте
+        product = Product(
+            name=form.name.data,
+            price=form.price.data,
+            amount=form.amount.data,
+            description=form.description.data,
+            discount=form.discount.data,
+            status=form.status.data,
+            category_id=form.category_id.data
+        )
+        db.session.add(product)
+        db.session.flush()  # Используем flush, чтобы получить ID продукта для использования в связанных таблицах
+
+        # Обработка загрузки изображений
+        if 'images' in request.files:
+            files = request.files.getlist('images')  # Получение всех файлов из формы
+            for file in files:
+                if file and allowed_file(file.filename):  # Проверка, разрешён ли файл
+                    filename = secure_filename(file.filename)
+                    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                    file.save(file_path)  # Сохранение файла
+
+                    # Создание записи в базе данных для изображения продукта
+                    image = ProductImage(product_id=product.product_id, image_url=file_path)
+                    db.session.add(image)
+
+        db.session.commit()  # Подтверждение всех операций с базой данных
+
+        flash('Product created successfully', 'success')
         return redirect(url_for('manage_products'))
 
-    # Получение всех данных для отображения в соответствующих вкладках
-    products = Product.query.all()
-    orders = Order.query.all()
-    reviews = Review.query.all()
-    users = UserData.query.all()
+    return render_template('crm.html', form=form)
 
-    # Передача данных в шаблон
-    return render_template('crm.html', products=products, orders=orders, reviews=reviews, users=users)
 
 
 @app.route('/products/delete/<int:product_id>', methods=['POST'])
@@ -254,7 +274,7 @@ def delete_product(product_id):
     return redirect(url_for('manage_products'))
 
 
-@app.route('/contact', methods=['GET','POST'])
+@app.route('/contact', methods=['GET', 'POST'])
 def contact():
     if request.method == 'POST':
         name = request.form['name']

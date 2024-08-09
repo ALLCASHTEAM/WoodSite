@@ -28,7 +28,8 @@
             <!-- Вкладка Product -->
             <div class="tab-pane fade show active" id="product" role="tabpanel" aria-labelledby="product-tab">
                 <h2>Products</h2>
-                <form method="POST" action="{{ url_for('manage_products') }}">
+                <form method="POST" action="{{ url_for('manage_products') }}" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
                     <input type="hidden" name="product_id" id="product_id">
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
@@ -58,6 +59,10 @@
                         <label for="category_id" class="form-label">Category ID</label>
                         <input type="number" class="form-control" id="category_id" name="category_id" required>
                     </div>
+                     <div class="mb-3">
+                        <label for="images" class="form-label">Product Images</label>
+                        <input type="file" class="form-control" id="images" name="images" multiple>
+                    </div>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </form>
 
@@ -67,6 +72,11 @@
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <span>{{ product.name }} - {{ product.price }}</span>
                         <div>
+                            <div>
+                                {% for image in product.images %}
+                                <img src="{{ url_for('static', filename=image.image_url) }}" alt="Product Image" style="width: 50px; height: 50px;">
+                                {% endfor %}
+                            </div>
                             <button class="btn btn-warning btn-sm" onclick="editProduct({{ product.product_id }}, '{{ product.name }}', {{ product.price }}, {{ product.amount }}, '{{ product.description }}', {{ product.discount }}, '{{ product.status }}', {{ product.category_id }})">Edit</button>
                             <form method="POST" action="{{ url_for('delete_product', product_id=product.product_id) }}" class="d-inline-block">
                                 <button type="submit" class="btn btn-danger btn-sm">Delete</button>
