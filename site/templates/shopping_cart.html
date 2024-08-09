@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Корзина{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/shopping_cart.css') }}">
+<body>
+    <div class="container">
+        <div class="checkout-details">
+            <h2>Корзина</h2>
+            <div class="section">
+                <h3>Детали доставки</h3>
+                <input type="text" placeholder="Name on Card" required>
+                <input type="text" placeholder="Card Number" required>
+                <input type="text" placeholder="Valid Through" required>
+                <input type="text" placeholder="CVC Code" required>
+            </div>
+
+            <button class="btn">Перейти к оплате</button>
+        </div>
+
+        <div class="order-summary">
+            <h3>Ваш заказ</h3>
+
+            <!-- Начало блока для товара -->
+            <div class="order-item">
+                <div>
+                    <span>Пенис вайб</span>
+                    <p>Летальная доза героина</p>
+                </div>
+                <div>
+                    <input type="number" value="2" style="width: 40px; padding: 5px;">
+                    <span>179 ₽</span>
+                </div>
+            </div>
+            <!-- Конец блока для товара -->
+
+            <!-- Можно добавить еще товары здесь аналогично блоку выше -->
+
+            <div class="summary-total">
+                <div>
+                    <span>Промежуточная сумма</span>
+                    <span>179 ₽</span>
+                </div>
+                <div>
+                    <span>Доставка</span>
+                    <span>0 ₽</span>
+                </div>
+                <div>
+                    <span>Итог</span>
+                    <span>537 ₽</span>
+                </div>
+            </div>
+
+            <button class="btn-secondary">Ввести промокод</button>
+        </div>
+    </div>
+</body>
+
+
+
+{% endblock %}

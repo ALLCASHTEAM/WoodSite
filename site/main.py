@@ -277,6 +277,11 @@ def faq():
     return render_template('faq.html')
 
 
+@app.route('/shopping_cart')
+def shopping_cart():
+    return render_template('shopping_cart.html')
+
+
 @app.route('/order_history')
 def order_history():
     return render_template('order_history.html')
