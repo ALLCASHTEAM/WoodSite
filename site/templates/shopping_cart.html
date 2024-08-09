@@ -3,61 +3,69 @@
 {% block title %}Корзина{% endblock %}
 
 {% block content %}
-
 <link rel="stylesheet" href="{{ url_for('static', filename='css/shopping_cart.css') }}">
-<body>
-    <div class="container">
+<div class="container">
         <div class="checkout-details">
             <h2>Корзина</h2>
             <div class="section">
                 <h3>Детали доставки</h3>
-                <input type="text" placeholder="Name on Card" required>
-                <input type="text" placeholder="Card Number" required>
-                <input type="text" placeholder="Valid Through" required>
-                <input type="text" placeholder="CVC Code" required>
+                <input type="text" placeholder="ФИО получателя" required>
+                <input type="text" placeholder="Номер получателя" required>
+                <input type="text" placeholder="Город" required>
+                <input type="text" placeholder="Название улицы, дом, квартира" required>
+                <input type="text" placeholder="Почтовый индекс" required>
             </div>
 
-            <button class="btn">Перейти к оплате</button>
+        <button class="btn">Перейти к оплате</button>
+            </div>
+    <div class="order-summary">
+        <h3>Ваш заказ</h3>
+        <div id="cart-items-container"></div>
+        <div class="summary-total">
+            <div>
+                <span>Промежуточная сумма</span>
+                <span id="total-price">0 ₽</span>
+            </div>
+            <div>
+                <span>Доставка</span>
+                <span>0 ₽</span>
+            </div>
+            <div>
+                <span>Итог</span>
+                <span id="final-price">0 ₽</span>
+            </div>
         </div>
-
-        <div class="order-summary">
-            <h3>Ваш заказ</h3>
-
-            <!-- Начало блока для товара -->
-            <div class="order-item">
-                <div>
-                    <span>Пенис вайб</span>
-                    <p>Летальная доза героина</p>
-                </div>
-                <div>
-                    <input type="number" value="2" style="width: 40px; padding: 5px;">
-                    <span>179 ₽</span>
-                </div>
-            </div>
-            <!-- Конец блока для товара -->
-
-            <!-- Можно добавить еще товары здесь аналогично блоку выше -->
-
-            <div class="summary-total">
-                <div>
-                    <span>Промежуточная сумма</span>
-                    <span>179 ₽</span>
-                </div>
-                <div>
-                    <span>Доставка</span>
-                    <span>0 ₽</span>
-                </div>
-                <div>
-                    <span>Итог</span>
-                    <span>537 ₽</span>
-                </div>
-            </div>
-
-            <button class="btn-secondary">Ввести промокод</button>
-        </div>
+        <button class="btn-secondary">Ввести промокод</button>
     </div>
-</body>
+</div>
 
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const cartItemsContainer = document.getElementById('cart-items-container');
+    const totalPriceElem = document.getElementById('total-price');
+    const finalPriceElem = document.getElementById('final-price');
 
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let total = 0;
+
+    cart.forEach(item => {
+        // Пример вывода элемента корзины
+        const itemDiv = document.createElement('div');
+        itemDiv.classList.add('cart-item');
+        itemDiv.innerHTML = `
+            <div>Товар ID: ${item.productId}</div>
+            <div>Цена: ${item.price} руб.</div>
+            <div>Количество: ${item.quantity}</div>
+            <div>Итог: ${item.price * item.quantity} руб.</div>
+        `;
+        cartItemsContainer.appendChild(itemDiv);
+
+        total += item.price * item.quantity;
+    });
+
+    totalPriceElem.textContent = `${total} ₽`;
+    finalPriceElem.textContent = `${total} ₽`;
+});
+</script>
 
 {% endblock %}
