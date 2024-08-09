@@ -41,6 +41,12 @@ class Product(db.Model):
     category_id = db.Column(db.Integer, db.ForeignKey('category.category_id'), nullable=False)
 
 
+class ProductImage(db.Model):
+    image_id = db.Column(db.Integer, primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.product_id'), nullable=False)
+    image_url = db.Column(db.String(255), nullable=False)  # или путь к файлу
+
+
 class ContactMe(db.Model):
     request_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
