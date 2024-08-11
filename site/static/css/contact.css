@@ -9,7 +9,7 @@
 
 .contact-page {
   width: 100%; /* Установите ширину контейнера */
-  max-width: 1200px;
+  max-width: 1360px;
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -37,8 +37,9 @@
 .icon-cont {
   width: 60px;
   height: 60px;
-  background-color: #3494db;
+  background-color: white;
   border-radius: 50%;
+  border: 2px solid #AA612A;
   margin-right: 16px;
   display: flex;
   align-items: center;
@@ -65,7 +66,7 @@ p {
   height: 50px;
   padding: 12px;
   background-color: #f9f9f9;
-  border: 2px solid #3494db;
+  border: 2px solid #AA612A;
   color: #333;
   margin-bottom: 20px;
   border-radius: 5px;
@@ -81,7 +82,7 @@ textarea {
   resize: vertical;
   padding: 12px;
   background-color: #f9f9f9;
-  border: 2px solid #3494db;
+  border: 2px solid #AA612A;
   color: #333;
   margin-bottom: 20px;
   border-radius: 5px;
@@ -93,19 +94,20 @@ textarea {
 .btn {
   width: 120px;
   height: 40px;
-  background-color: #3494db;
+  background-color: #AA612A;
   border: none;
   color: #fff;
   text-transform: uppercase;
   cursor: pointer;
-  border: 2px solid #3494db;
+  border: 2px solid #AA612A;
   transition: .3s linear;
   border-radius: 5px;
+  font-size: 15px;
+  font-family: "Inter";
 }
 
 .btn:hover {
-  background-color: transparent;
-  color: #3494db;
+  background-color: #cf7b3c;
 }
 
 .heading {
@@ -118,7 +120,7 @@ textarea {
 .map-container {
   width: 100%;
   margin-top: 10px;
-  border: 2px solid #3494db;
+  border: 2px solid #AA612A;
   border-radius: 10px;
   overflow: hidden;
 }
