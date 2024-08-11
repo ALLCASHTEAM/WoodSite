@@ -64,11 +64,13 @@
         <div class="products">
             {% for product in products %}
                 <div class="product-card">
+                        <a href="{{ url_for('product_page', product_id=product.product_id) }}">
                     {% if product.images %}
                         <img src="{{ url_for('static', filename=product.images[0].image_url.replace('\\', '/')) }}" alt="Product Image" style="width: 100%;">
                     {% else %}
                         <img src="{{ url_for('static', filename='no-image.png') }}" alt="No image available" style="width: 100%;">
                     {% endif %}
+                        </a>
                     <div class="price-button"
                          data-product-id="{{ product.product_id }}"
                          data-product-price="{{ product.price }}">

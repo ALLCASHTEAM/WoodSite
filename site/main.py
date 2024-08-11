@@ -310,6 +310,21 @@ def order_history():
     return render_template('order_history.html')
 
 
+@app.route('/product/<int:product_id>')
+def product_page(product_id):
+    product = Product.query.get_or_404(product_id)
+    return render_template('product_page.html', product=product)
+
+
+@app.route('/submit_review/<int:product_id>', methods=['POST'])
+def submit_review(product_id):
+    content = request.form['review_content']
+    review = Review(product_id=product_id, user_id=current_user.user_id, content=content)
+    db.session.add(review)
+    db.session.commit()
+    return redirect(url_for('product_page', product_id=product_id))
+
+
 if __name__ == '__main__':
     with app.app_context():
         init_db()

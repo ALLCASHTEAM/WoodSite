@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ product.name }}
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/prod_page.css') }}">
+
+<div class="background" style="background-image: url('{{ url_for('static', filename=product.main_image_url) }}');">
+        <div class="content">
+            <div class="gallery">
+                <img id="main-image" src="{{ url_for('static', filename=product.images[0].url) }}" alt="Выбранное фото">
+                <div class="thumbnails">
+                    {% for image in product.images %}
+                    <img src="{{ url_for('static', filename=image.url) }}" alt="Другое фото" onclick="changeImage('{{ url_for('static', filename=image.url) }}')">
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="info">
+                <h1>{{ product.name }}</h1>
+                <div class="price-buy">
+                    <span class="price">{{ product.price }} руб.</span>
+                    <button class="buy-button">Купить</button>
+                </div>
+                <p>{{ product.description }}</p>
+            </div>
+        </div>
+    </div>
+<script>
+function changeImage(src) {
+    document.getElementById('main-image').src = src;
+}
+</script>
+{% endblock %}
