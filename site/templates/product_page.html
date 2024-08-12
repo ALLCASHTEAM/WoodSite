@@ -23,8 +23,13 @@
                     <span class="price">{{ product.price }} руб.</span>
                     <button class="buy-button">Купить</button>
                 </div>
+                <div class="rating-reviews">
+                    <span class="stars">{{ '★' * average_rating + '☆' * (5 - average_rating) }}</span>
+                    <span class="reviews-count">({{ reviews_count }} отзывов)</span>
+                </div>
                 <p>{{ product.description }}</p>
             </div>
+
         </div>
     </div>
 <script>

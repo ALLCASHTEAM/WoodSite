@@ -71,3 +71,20 @@ body, html {
     border: none;
     cursor: pointer;
 }
+
+.rating-reviews {
+    font-size: 1.2rem;
+    color: #666;
+    margin: 10px 0;
+}
+
+.stars {
+    color: gold;
+    margin-right: 5px;
+}
+
+.reviews-count {
+    font-size: 1rem;
+    color: #666;
+}
+
