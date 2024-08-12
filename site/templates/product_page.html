@@ -10,12 +10,13 @@
 <div class="background" style="background-image: url('{{ url_for('static', filename=product.main_image_url) }}');">
         <div class="content">
             <div class="gallery">
-                <img id="main-image" src="{{ url_for('static', filename=product.images[0].url) }}" alt="Выбранное фото">
+                <img id="main-image" src="{{ url_for('static', filename=product.images[2].image_url.replace('\\', '/')) }}" alt="Выбранное фото">
                 <div class="thumbnails">
                     {% for image in product.images %}
-                    <img src="{{ url_for('static', filename=image.url) }}" alt="Другое фото" onclick="changeImage('{{ url_for('static', filename=image.url) }}')">
+                    <img src="{{ url_for('static', filename=image.image_url) }}" alt="Фото" onclick="changeImage('{{ url_for('static', filename=image.image_url) }}')">
                     {% endfor %}
                 </div>
+
             </div>
             <div class="info">
                 <h1>{{ product.name }}</h1>
