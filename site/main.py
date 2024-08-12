@@ -310,10 +310,18 @@ def order_history():
     return render_template('order_history.html')
 
 
-@app.route('/product/<int:product_id>')
-def product_page(product_id):
+@app.route('/product/<int:product_id>', endpoint='product_page')
+def product(product_id):
     product = Product.query.get_or_404(product_id)
-    return render_template('product_page.html', product=product)
+    reviews = Review.query.filter_by(product_id=product_id).all()
+    if reviews:
+        average_rating = round(sum([review.mark for review in reviews]) / len(reviews))
+        reviews_count = len(reviews)
+    else:
+        average_rating = 0
+        reviews_count = 0
+
+    return render_template('product_page.html', product=product, average_rating=average_rating, reviews_count=reviews_count)
 
 
 @app.route('/submit_review/<int:product_id>', methods=['POST'])
