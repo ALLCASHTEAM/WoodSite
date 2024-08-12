@@ -35,8 +35,31 @@
                 <p>{{ product.description }}</p>
             </div>
 
+
         </div>
     </div>
+<div class="review-form">
+                <h2>Оставьте ваш отзыв</h2>
+                <form action="/submit_review" method="POST">
+                    <input type="hidden" name="product_id" value="{{ product.product_id }}">
+
+                    <!-- Рейтинг звездами -->
+                    <div class="rating">
+                        <input type="radio" id="star5" name="rating" value="1" /><label for="star5">★</label>
+                        <input type="radio" id="star4" name="rating" value="2" /><label for="star4">★</label>
+                        <input type="radio" id="star3" name="rating" value="3" /><label for="star3">★</label>
+                        <input type="radio" id="star2" name="rating" value="4" /><label for="star2">★</label>
+                        <input type="radio" id="star1" name="rating" value="5" /><label for="star1">★</label>
+                    </div>
+
+
+                    <!-- Поле для текстового отзыва -->
+                    <textarea name="review_content" placeholder="Напишите ваш отзыв здесь..." required></textarea>
+
+                    <!-- Кнопка для отправки отзыва -->
+                    <button type="submit" class="submit-button">Оставить отзыв</button>
+                </form>
+            </div>
 <script>
 function changeImage(src) {
     document.getElementById('main-image').src = src;
@@ -61,5 +84,23 @@ function addToCart(buttonElement) {
     localStorage.setItem('cart', JSON.stringify(cart));  // Обновляем корзину в localStorage
     alert('Товар добавлен в корзину!');
 }
+
+document.querySelectorAll('.review-form .rating input').forEach(input => {
+    input.addEventListener('change', function() {
+        // Получаем все звезды до (включая) выбранной
+        let labels = Array.from(this.parentNode.querySelectorAll('label'));
+        let chosenRating = parseInt(this.value, 10);  // Получаем значение выбранной звезды
+
+        labels.forEach((label, idx) => {
+            // Здесь idx начинается с 0, а звезды оцениваются от 1 до 5
+            // Окрашиваем все звезды от 0 до idx меньше значения выбранной звезды
+            label.style.color = (idx < chosenRating) ? 'gold' : 'grey';
+        });
+    });
+});
+
+
+
+
 </script>
 {% endblock %}
