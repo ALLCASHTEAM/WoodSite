@@ -14,11 +14,14 @@ body {
   font-size: large;
   background-color: #fff8e7;
   border-bottom: 1px solid #5c4d46;
+  position: relative;
 }
-
+.logo h1 {
+  margin-right: 50px;
+}
 .header-content {
   display: flex;
-  justify-content: space-between;
+  justify-content: center; /* Элементы будут располагаться от центра */
   align-items: center;
 }
 
@@ -61,6 +64,13 @@ body {
   position: relative;
   display: flex;
   align-items: center;
+}
+
+.icon-container {
+  display: flex;
+  gap: 20px; /* Регулируйте расстояние между иконками */
+  align-items: center;
+  margin-left: 25px;
 }
 
 .cart-count {
@@ -229,6 +239,137 @@ body {
   display: block;
 }
 
+/* Адаптивный хедер */
+@media screen and (max-width: 1600px) {
+  .flex-container {
+    display: none; /* Скрыть элементы навигации */
+  }
+
+  .menu-icon {
+    display: block; /* Показать иконку меню */
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .menu-icon img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .header-content {
+    justify-content: center;
+  }
+  .logo h1 {
+    margin-right: 25px;
+  }
+  .icon-container {
+    margin-left: 5px;
+  }
+}
+
+@media screen and (min-width: 1601px) {
+  .menu-icon {
+    display: none;
+  }
+}
+
+/* Стили для выпадающего меню */
+.mobile-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff8e7;
+  width: 100%;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+}
+
+.mobile-menu a {
+  display: block;
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-decoration: none;
+  color: black;
+  font-size: 22px;
+}
+
+.menu-icon.active + .mobile-menu {
+  display: block;
+}
+
+/* Адаптивный футер для мобильных устройств */
+@media screen and (max-width: 1000px) {
+  .footer-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer-info, .footer-catalog-1, .footer-catalog-2, .footer-brand {
+    display: none;
+  }
+
+  .footer-dropdown {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .footer-dropdown .dropdown-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #5c4d46;
+    color: #ffffff;
+    padding: 10px;
+    border: none;
+    width: 100%;
+    text-align: left;
+    font-size: 18px;
+  }
+
+  .footer-dropdown-content {
+    display: none;
+    padding: 10px;
+    background-color: #5c4d46;
+    color: white;
+  }
+
+  .footer-dropdown-content p {
+    margin: 0;
+    margin-bottom: 10px;
+  }
+
+  .footer-dropdown-content a {
+    color: white;
+    text-decoration: underline;
+  }
+
+  .footer-dropdown .arrow {
+    transition: transform 0.3s ease;
+  }
+
+  .footer-dropdown.open .footer-dropdown-content {
+    display: block;
+  }
+
+  .footer-dropdown.open .arrow {
+    transform: rotate(90deg);
+  }
+}
+
+@media screen and (min-width: 1001px) {
+  .footer-dropdown {
+    display: none;
+  }
+
+  .footer-info, .footer-catalog-1, .footer-catalog-2, .footer-brand {
+    display: block;
+  }
+}
+
 /* Стили для футера */
 .footer {
   background-color: #5c4d46;
@@ -255,7 +396,6 @@ body {
   text-align: left;
   text-decoration: underline;
 }
-
 
 .footer-info {
   line-height: 1.5;

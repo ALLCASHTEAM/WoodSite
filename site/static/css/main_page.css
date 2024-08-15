@@ -17,7 +17,6 @@ body {
 .container {
   max-width: 1200px;
   margin: 20px auto;
-  padding: 0 20px;
   background-color: rgba(255, 255, 255, 0.9); /* Белый цвет с прозрачностью */
 }
 
@@ -42,6 +41,8 @@ body {
 #banner p {
   color: black;
   font-size: 1.25em;
+  margin-left: 150px;
+  margin-right: 150px;
 }
 
 #banner .actions {
@@ -85,8 +86,10 @@ ul {
 
 .scroll-down {
   position: absolute;
-  bottom: 20px;
+  bottom: 5px;
   width: 100%;
+  padding: 0;
+  margin: 0;
   text-align: center;
 }
 
@@ -98,11 +101,14 @@ ul {
 
 .scroll-down a {
   display: block;
+  width: 100%;
+  margin: 0;
   transition: transform 0.3s ease-in-out;
 }
 
 .scroll-down a:hover {
   transform: translateY(5px);
+  background-color: #f5f5f5;
 }
 
 /* Стили для секции Who I Am */

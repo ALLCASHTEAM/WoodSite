@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <header id = "top" class="header">
+    <header id="top" class="header">
         <div class="header-container">
             <div class="header-content">
                 <div class="logo">
@@ -38,6 +38,12 @@
                     </div>
                     <a id="contact-link" href="{{ url_for('contact') }}" class="nav-link">Контакты</a>
                     <a id="faq-link" href="{{ url_for('faq') }}" class="nav-link">FAQ</a>
+                </div>
+                <div class="icon-container">
+                    <a href="{{ url_for('shopping_cart') }}" class="icon">
+                        🛒
+                        <span id="cart-count" class="cart-count">12</span>
+                    </a>
                     <div class="dropdown-profile">
                         <span class="icon" id="profile-menu-toggle">👤</span>
                         <div class="dropdown-content-profile" id="profile-menu">
@@ -51,10 +57,16 @@
                             {% endif %}
                         </div>
                     </div>
-                    <a href="{{ url_for('shopping_cart') }}" class="icon">
-                        🛒
-                        <span id="cart-count" class="cart-count">0</span>
-                    </a>
+                    <div class="menu-icon">
+                        <img src="{{ url_for('static', filename='img/menu-icon.png') }}" alt="Menu Icon" />
+                    </div>
+                    <div class="mobile-menu">
+                        <a id="home-link" href="{{ url_for('index') }}" class="nav-link">Главная</a>
+                        <a id="about-link" href="{{ url_for('about') }}" class="nav-link">О нас</a>
+                        <a href="{{ url_for('catalog') }}" class="nav-link">Каталог</a>
+                        <a id="contact-link" href="{{ url_for('contact') }}" class="nav-link">Контакты</a>
+                        <a id="faq-link" href="{{ url_for('faq') }}" class="nav-link">FAQ</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -67,6 +79,30 @@
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-content">
+                <!-- Добавляем новые элементы для мобильной версии -->
+                <div class="footer-dropdown">
+                    <button class="dropdown-button">
+                        Контакты <span class="arrow">&#9654;</span>
+                    </button>
+                    <div class="footer-dropdown-content">
+                        <p>Адрес<br />Москва, Вешних Вод, д 14, стр.2</p>
+                        <p>Email<br />contact@gmail.com</p>
+                        <p>Телефон<br />+79182315619</p>
+                    </div>
+                </div>
+
+                <div class="footer-dropdown">
+                    <button class="dropdown-button">
+                        Информация <span class="arrow">&#9654;</span>
+                    </button>
+                    <div class="footer-dropdown-content">
+                        <p><a href="#">Пользовательское соглашение</a></p>
+                        <p><a href="#">Политика конфиденциальности</a></p>
+                        <p><a href="#">Обработка персональных данных</a></p>
+                    </div>
+                </div>
+
+                <!-- Старые элементы футера, которые будут скрыты на мобильных устройствах -->
                 <div class="footer-info">
                     <p><em>Контакты</em></p>
                     <p>Адрес<br />Москва, Вешних Вод, д 14, стр.2</p>
@@ -161,4 +197,22 @@ function updateCartCount() {
 
 // Обновляем количество товаров при загрузке страницы
 document.addEventListener('DOMContentLoaded', updateCartCount);
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Меню в хедере
+    const menuIcon = document.querySelector('.menu-icon');
+    menuIcon.addEventListener('click', function() {
+        menuIcon.classList.toggle('active');
+    });
+
+    // Выпадающие меню в футере
+    const footerDropdowns = document.querySelectorAll('.footer-dropdown');
+
+    footerDropdowns.forEach(dropdown => {
+        const button = dropdown.querySelector('.dropdown-button');
+        button.addEventListener('click', function(event) {
+            dropdown.classList.toggle('open');
+        });
+    });
+});
 </script>
