@@ -101,7 +101,11 @@
                         <p><a href="#">Обработка персональных данных</a></p>
                     </div>
                 </div>
-
+                <div class="footer-bottom">
+                    <div class="footer-copyright">
+                        <p>© 2024 WOODSHOP. All rights reserved.</p>
+                    </div>
+                </div>
                 <!-- Старые элементы футера, которые будут скрыты на мобильных устройствах -->
                 <div class="footer-info">
                     <p><em>Контакты</em></p>
@@ -201,8 +205,19 @@ document.addEventListener('DOMContentLoaded', updateCartCount);
 document.addEventListener('DOMContentLoaded', function() {
     // Меню в хедере
     const menuIcon = document.querySelector('.menu-icon');
+    const mobileMenu = document.querySelector('.mobile-menu');
+
     menuIcon.addEventListener('click', function() {
         menuIcon.classList.toggle('active');
+        mobileMenu.classList.toggle('open');
+    });
+
+    // Закрытие дропдауна при увеличении экрана
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 1600) {
+            mobileMenu.classList.remove('open');
+            menuIcon.classList.remove('active');
+        }
     });
 
     // Выпадающие меню в футере

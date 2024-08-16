@@ -277,24 +277,48 @@ body {
 }
 
 /* Стили для выпадающего меню */
+/* Стили для выпадающего меню */
 .mobile-menu {
-  display: none;
+  display: block;  /* Устанавливаем display в block, чтобы контролировать с помощью max-height */
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: #fff8e7;
+  background-color: #fff8e7;  /* Цвет фона */
   width: 100%;
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
   z-index: 999;
+  max-height: 0;  /* Начальное значение max-height для скрытого меню */
+  overflow: hidden;  /* Скрываем содержимое, если max-height недостаточно для его отображения */
+  transition: max-height 0.5s ease-in-out;  /* Анимация изменения max-height */
 }
 
+.mobile-menu.open {
+  max-height: 500px;  /* Максимальная высота при открытии меню */
+}
+
+/* Стили для ссылок внутри mobile-menu */
 .mobile-menu a {
-  display: block;
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
+  color: black; /* Цвет текста */
+  padding: 12px 16px; /* Отступы */
   text-decoration: none;
-  color: black;
-  font-size: 22px;
+  display: block;
+  border-bottom: 1px solid #ddd; /* Границы между пунктами меню */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Переходы на hover */
+}
+
+/* Убираем псевдоэлементы */
+.mobile-menu a:before,
+.mobile-menu a:after {
+  content: none; /* Убираем псевдоэлементы */
+}
+
+.mobile-menu a:last-child {
+  border-bottom: none; /* Убираем нижнюю границу у последнего элемента */
+}
+
+.mobile-menu a:hover {
+  background-color: #ddd; /* Цвет фона при наведении */
+  color: #5c4d46; /* Цвет текста при наведении */
 }
 
 .menu-icon.active + .mobile-menu {
@@ -307,7 +331,11 @@ body {
     flex-direction: column;
     align-items: flex-start;
   }
-
+  .footer-copyright p{
+    font-size: 16px;
+    display: block !important;
+    margin-left: 10px;
+  }
   .footer-info, .footer-catalog-1, .footer-catalog-2, .footer-brand {
     display: none;
   }
@@ -438,4 +466,8 @@ body {
 .footer-brand p {
   font-size: 16px;
   line-height: 1;
+}
+.footer-copyright p{
+  font-size: 16px;
+  display: none;
 }
