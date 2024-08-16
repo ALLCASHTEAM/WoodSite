@@ -21,12 +21,24 @@ body {
 }
 
 #banner, .wrapper {
-  height: 90vh; /* Высота на весь экран */
+  min-height: 90vh; /* Используем min-height вместо height, чтобы секции адаптировались к содержимому */
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
+  box-sizing: border-box; /* Убедитесь, что padding и border не влияют на общую ширину и высоту */
 }
+
+.wrapper.style2 {
+  padding: 20px; /* Добавляем padding для отступов */
+  margin-bottom: 20px; /* Добавляем нижний отступ, чтобы отделить секцию от футера */
+}
+
+.wrapper.style2 .box.person {
+  max-width: 100%; /* Убедитесь, что блоки не выходят за пределы контейнера */
+  margin: 0 auto 20px; /* Отступы между блоками и нижний отступ */
+}
+
 
 #banner .inner, .wrapper .inner {
   text-align: center;
@@ -244,8 +256,10 @@ ul {
   }
 
   .wrapper.style2 .box.person {
-    max-width: 100%;
-    margin-bottom: 1.5em;
+    padding: 10px; /* Уменьшаем padding на мобильных устройствах */
+  }
+  .wrapper.style2 .flex {
+    flex-direction: column; /* Переводим flex-контейнер в столбик для маленьких экранов */
   }
 
   .scroll-down img {
