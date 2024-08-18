@@ -89,19 +89,16 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const priceButtons = document.querySelectorAll('.price-button');
+    const notification = document.getElementById('cart-notification');
+    const closeButton = document.querySelector('.cart-notification .close-btn');
 
     priceButtons.forEach(button => {
         button.addEventListener('click', () => {
             const productId = button.getAttribute('data-product-id');
             const productPrice = button.getAttribute('data-product-price');
 
-            console.log(`Product ID: ${productId}`);
-            console.log(`Product Price: ${productPrice}`);
-
             if (productId && productPrice) {
                 let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-                console.log('Current Cart:', cart);
 
                 let product = cart.find(item => item.productId === productId);
                 if (product) {
@@ -119,12 +116,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Обновляем количество товаров в корзине после добавления
                 updateCartCount();
 
-                alert('Товар добавлен в корзину!');
+                // Показ баннера
+                showCartNotification();
             } else {
                 alert('Ошибка при добавлении товара в корзину. Проверьте данные товара.');
             }
         });
     });
+
+    function showCartNotification() {
+        notification.style.top = '20px'; // Позиция сверху экрана
+        notification.style.opacity = '1'; // Делает баннер видимым
+
+        // Скрыть баннер через 3 секунды, если он не был закрыт вручную
+        setTimeout(() => {
+            hideCartNotification();
+        }, 3000);
+    }
+
+    function hideCartNotification() {
+        notification.style.top = '-50px'; // Убрать за пределы экрана
+        notification.style.opacity = '0'; // Скрыть с анимацией увядания
+    }
+
+    // Закрытие уведомления по нажатию на крестик
+    closeButton.addEventListener('click', hideCartNotification);
 });
 </script>
 

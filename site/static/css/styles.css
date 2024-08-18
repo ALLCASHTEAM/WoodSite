@@ -325,6 +325,7 @@ body {
   display: block;
 }
 
+
 /* Адаптивный футер для мобильных устройств */
 @media screen and (max-width: 1000px) {
   .footer-content {
@@ -470,4 +471,34 @@ body {
 .footer-copyright p{
   font-size: 16px;
   display: none;
+}
+
+.cart-notification {
+    position: fixed;
+    top: -50px; /* Изначально убрано за пределы экрана */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #cf7b3c;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-family: 'Inter', sans-serif;
+    z-index: 10000;
+    opacity: 0;
+    transition: top 0.5s ease, opacity 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Обеспечивает пространство между текстом и крестиком */
+}
+
+/* Стили для кнопки закрытия */
+.cart-notification .close-btn {
+    cursor: pointer;
+    font-size: 20px;
+    margin-left: 20px;
+    color: white;
+    background: none;
+    border: none;
+    outline: none;
 }
