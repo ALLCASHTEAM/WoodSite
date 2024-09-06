@@ -44,46 +44,58 @@ document.addEventListener('DOMContentLoaded', () => {
     const cartItemsContainer = document.getElementById('cart-items-container');
     const totalPriceElem = document.getElementById('total-price');
     const finalPriceElem = document.getElementById('final-price');
+    const checkoutButton = document.querySelector('.btn');
+    const inputs = document.querySelectorAll('.section input[type="text"]');
 
+    // Извлекаем данные корзины из localStorage
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    let total = 0;
+    updateCartDisplay();
 
-    cart.forEach(item => {
-        // Пример вывода элемента корзины
-        const itemDiv = document.createElement('div');
-        itemDiv.classList.add('cart-item');
-        itemDiv.innerHTML = `
-            <div>Товар ID: ${item.productId}</div>
-            <div>Цена: ${item.price} руб.</div>
-            <div>Количество: ${item.quantity}</div>
-            <div>Итог: ${item.price * item.quantity} руб.</div>
-        `;
-        cartItemsContainer.appendChild(itemDiv);
+    // Функция для обновления отображения корзины
+    function updateCartDisplay() {
+        cartItemsContainer.innerHTML = ''; // Очистка текущего содержимого
+        let total = 0; // Сумма заказа
 
-        total += item.price * item.quantity;
+        cart.forEach((item, index) => {
+            const itemElement = document.createElement('div');
+            itemElement.classList.add('cart-item');
+            itemElement.innerHTML = `
+                <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px;">
+                <div>Товар: ${item.name}</div>
+                <div>Цена за единицу: ${item.price} руб.</div>
+                <div>Количество: <button onclick="changeItemQuantity(${index}, -1)">-</button> ${item.quantity} <button onclick="changeItemQuantity(${index}, 1)">+</button></div>
+                <div>Сумма: ${item.price * item.quantity} руб.</div>
+            `;
+            cartItemsContainer.appendChild(itemElement);
+            total += item.price * item.quantity;
+        });
+
+        totalPriceElem.textContent = `${total} ₽`;
+        finalPriceElem.textContent = `${total} ₽`;
+        localStorage.setItem('cart', JSON.stringify(cart)); // Обновляем данные в localStorage
+    }
+
+    // Функция для изменения количества товаров
+    window.changeItemQuantity = function (index, change) {
+        if (cart[index].quantity + change > 0) {
+            cart[index].quantity += change;
+        } else {
+            cart.splice(index, 1); // Удаление товара, если его количество равно 0
+        }
+        updateCartDisplay(); // Перерисовка корзины
+    };
+
+    // Функция проверки заполнения всех полей перед переходом к оплате
+    checkoutButton.addEventListener('click', () => {
+        const allFieldsFilled = Array.from(inputs).every(input => input.value.trim() !== '');
+        if (allFieldsFilled) {
+            window.location.href = '/checkout'; // Переход к странице оплаты
+        } else {
+            alert('Пожалуйста, заполните все поля.');
+        }
     });
-
-    totalPriceElem.textContent = `${total} ₽`;
-    finalPriceElem.textContent = `${total} ₽`;
 });
 
-function updateCartCount() {
-    const cartCountElem = document.getElementById('cart-count'); // Элемент для отображения количества товаров
-
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    let itemCount = 0; // Переменная для хранения количества товаров
-
-    cart.forEach(item => {
-        itemCount += item.quantity; // Увеличиваем количество товаров
-    });
-
-    if (cartCountElem) {
-        cartCountElem.textContent = itemCount; // Обновляем количество товаров на иконке
-    }
-}
-
-// Обновляем количество товаров при загрузке страницы
-document.addEventListener('DOMContentLoaded', updateCartCount);
 </script>
 
 {% endblock %}
